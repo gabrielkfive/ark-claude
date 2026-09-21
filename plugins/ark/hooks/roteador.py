@@ -76,7 +76,7 @@ if len(achadas) < 3 and catalogo:
             continue
         # Camada 2: nome citado
         tokens_nome = [t for t in nome.split("-") if len(t) > 3]
-        if nome in p or (tokens_nome and all(t in p for t in tokens_nome)):
+        if nome in p or nome.replace("-", " ") in p or (len(tokens_nome) >= 2 and all(t in p for t in tokens_nome)):
             add(ref, "nome citado no pedido")
             continue
         # Camada 3: sobreposição com a descrição
@@ -88,10 +88,30 @@ if len(achadas) < 3 and catalogo:
     for n, ref, motivo in sorted(pontuadas, reverse=True)[:2]:
         add(ref, f"descrição bate em: {motivo}")
 
-if not achadas:
+# Processo obrigatório (pipeline superpowers e afins) quando o pedido é construção, bug ou entregável
+processo = None
+try:
+    for pr in json.load(open(os.path.join(RAIZ, "rotas.json"), encoding="utf-8")).get("processos", []):
+        if re.search(pr["gatilho"], p):
+            processo = pr
+            break
+except Exception:
+    processo = None
+
+if not achadas and not processo:
     raise SystemExit(0)
 
-linhas = "\n".join(f"  {s}  ({m})" for s, m in achadas)
-ctx = ("[ark roteador] Skills instaladas que casam com este pedido. Invoque a que se aplica ANTES de responder "
-       "(Gabriel quer as skills usadas; não ignorar):\n" + linhas)
+NL = "\n"
+partes = []
+if achadas:
+    linhas = NL.join(f"  {s_}  ({m})" for s_, m in achadas)
+    partes.append("[ark roteador] Skills instaladas que casam com este pedido. Invoque a que se aplica ANTES de responder "
+                  "(Gabriel quer as skills usadas; não ignorar):" + NL + linhas)
+if processo:
+    passos = NL.join(f"  {i}. {t}" for i, t in enumerate(processo["passos"], 1))
+    partes.append(f"[ark processo] Pedido de {processo['nome']}. Processo obrigatório, nesta ordem, cada skill invocada de verdade:"
+                  + NL + passos + NL +
+                  "  Regras acima de tudo: sem traço ou travessão; nada criado automaticamente (tarefa, notificação, cartão); "
+                  "nenhum número inventado; entregável é HTML local ou Worker, nunca Artifact; resposta em caveman lite.")
+ctx = (NL + NL).join(partes)
 print(json.dumps({"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": ctx}}, ensure_ascii=False))

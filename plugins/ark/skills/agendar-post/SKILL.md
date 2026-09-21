@@ -1,51 +1,100 @@
 ---
 name: agendar-post
-description: Agenda publicação de Reel/post no Instagram da Farmácia Vivenda (ou outro cliente) a partir de um link do Drive. Cria rotina de nuvem que publica sozinha, sem depender do PC ligado.
+description: Publica ou agenda Reel/post no Instagram da Farmácia Vivenda (ou outro cliente) a partir de um link do Drive. REGRA DO GABRIEL (21/09/2026): o jeito que funciona é publicar direto pelo conector Pipeboard na sessão, com account_id, esperar o timeout, conferir o feed e reportar o permalink. Rotina de nuvem só pra horário futuro explícito, e sempre com conferência no dia.
 ---
 
-# Agendar Post (Instagram via rotina de nuvem)
+# Publicar / Agendar Post (Instagram da Vivenda e outros clientes)
 
-## O que este comando faz
+## A regra (Gabriel, 21/09/2026: "é assim que você posta, dos outros jeitos não dá certo")
 
-Gabriel joga o link do Drive do vídeo editado (ou da pasta da captação), diz dia e hora (ou deixa que eu proponho), e eu:
-1. Resolvo o arquivo no Drive e monto a URL pública de download.
-2. Escrevo ou recupero a legenda.
-3. Crio uma rotina de nuvem (RemoteTrigger) que publica no horário certo via Pipeboard.
-4. Confirmo a rotina criada (next_run_at + URL da rotina) e reporto.
+O único caminho que publica de verdade, todas as vezes, é este:
 
-A publicação acontece na nuvem da Anthropic + API da Meta. Não depende do PC do Gabriel.
+1. `publish_instagram_media` do conector **Pipeboard-Meta-Ads**, chamado **direto da sessão**, com `account_id` preenchido.
+2. A chamada **dá timeout** quase sempre. Isso é normal, ela publica mesmo assim.
+3. Esperar **3 minutos** (`python -c "import time; time.sleep(180)"`).
+4. Conferir com `get_instagram_posts` (`time_range last_7d`) que a legenda apareceu.
+5. Só então dizer "no ar", **com o permalink**. Nunca antes.
+
+Nunca repetir o `publish` sem ter conferido o feed. Um timeout não é falha, é espera.
+
+### O que NÃO funciona (já testado, não insistir)
+
+| Caminho | Por que não |
+|---|---|
+| Rotina de nuvem (RemoteTrigger) como caminho principal | Depende da cota semanal do Pipeboard Free. Em 17/09 a rotina disparou, o Pipeboard recusou ("weekly limit on your Free plan"), o push de aviso passou batido e o post ficou 4 dias sem sair. |
+| `publish_instagram_media` sem `account_id` | Erro "Access is restricted to specific ad accounts". O parâmetro não aparece no schema da ferramenta, mas é obrigatório. |
+| Repetir o publish depois do timeout | Duplica o post. |
+| mLabs | Import do Drive falha acima de 100 MB, upload da extensão tem teto de 10 MB. |
+| CronCreate local | Morre com a sessão. |
+| Meta Business Suite manual | Só se o Gabriel pedir de dentro do gerenciador; não é o padrão. |
 
 ## Constantes (Farmácia Vivenda)
 
 | Campo | Valor |
 |---|---|
 | instagram_user_id | 17841400421978635 (@farmaciavivenda) |
-| account_id | act_1679063009779975 |
-| environment_id da rotina | env_011RyGRdo7HaqhxsCx9PubsX |
-| Conector MCP | Pipeboard-Meta-Ads, connector_uuid b931795d-4b71-450b-9c3c-31870c9cf9e7, url https://meta-ads.mcp.pipeboard.co |
+| account_id (OBRIGATÓRIO no publish) | act_1679063009779975 |
+| Conector MCP | Pipeboard-Meta-Ads (connector_uuid b931795d-4b71-450b-9c3c-31870c9cf9e7, url https://meta-ads.mcp.pipeboard.co) |
+| environment_id da rotina (só pra agendamento futuro) | env_011RyGRdo7HaqhxsCx9PubsX |
 | Collab da endocrinologista | dramariafernandamelo (só em conteúdo dela) |
 | Legendas prontas | Documents\ARK CONTENT\CLIENTES\FARMÁCIA VIVENDA\CONTEUDO\legendas-vivenda-doutora.md |
 
-## Passo a passo
+Pra outro cliente: pegar `instagram_user_id` com `get_instagram_accounts` e o `account_id` com `get_ad_accounts` (o conector só aceita contas da lista do login conectado).
+
+## Passo a passo do publish direto (padrão)
 
 ### 1. Resolver o vídeo
 - Link de arquivo: extrair o `id` do padrão `drive.google.com/file/d/<id>/view`.
 - Link de pasta: listar com `search_files` (`parentId = '<id>'`) e confirmar com Gabriel quais vídeos entram e em que ordem, a menos que ele já tenha dito.
 - URL de publicação: `https://drive.usercontent.google.com/download?id=<id>&export=download&confirm=t`
-- O arquivo precisa estar compartilhado como "qualquer pessoa com o link". Vídeos enviados pelo editor (_andradedlima@assessorialpha.com) costumam já estar. Se houver dúvida, testar com `curl -sI` e conferir que responde 200/303 sem página de login.
+- Testar antes: `curl -sI -L --max-time 30 "<url>" | grep -E "^HTTP|Content-Length"`. Precisa responder 200 com `Content-Length` do tamanho do vídeo. Se vier HTML de login, o arquivo não está como "qualquer pessoa com o link".
 
 ### 2. Legenda
 - Se existir legenda pronta no arquivo de legendas, usar exatamente.
 - Se não, escrever seguindo a régua do /roteiro: fato simples, sem frase de efeito inventada, sem travessão, fechar com a assinatura `📍 Farmácia Vivenda · Manipulação e Homeopatia · DF e Entorno` + 4 hashtags.
-- Salvar a legenda nova no arquivo de legendas antes de agendar.
+- Salvar a legenda nova no arquivo de legendas antes de publicar.
 
-### 3. Horário
-- Se Gabriel não deu horário: propor o padrão da conta (terça ou quarta 11h30, sexta 17h45) e seguir sem esperar resposta se ele pediu pra tocar.
-- Converter pra UTC: Brasília + 3h. Ex.: 17h46 local = 20h46Z. Evitar minuto 0 e 30 (usar 11h26, 17h46).
+### 3. Se a ferramenta ainda não estiver carregada
+`ToolSearch select:mcp__claude_ai_Pipeboard_Meta_Ads__publish_instagram_media,mcp__claude_ai_Pipeboard_Meta_Ads__get_instagram_posts`
 
-### 4. Criar a rotina (RemoteTrigger action create)
+Se o publish reclamar de roteamento de conta, rodar `get_ad_accounts` uma vez (atualiza o roteamento) e chamar de novo.
 
-Body do POST:
+### 4. Publicar
+
+```
+publish_instagram_media
+  instagram_user_id: 17841400421978635
+  account_id: act_1679063009779975        <- sem isso não vai
+  media_type: REELS
+  share_to_feed: true
+  collaborators: ["dramariafernandamelo"]  <- só conteúdo da doutora
+  video_url: <URL do passo 1>
+  caption: <legenda exata, com quebras de linha>
+```
+
+Se o modo automático bloquear a chamada (classificador de "transação real"), parar e pedir ao Gabriel um "publica". Com o "publica" dele, chamar de novo. Não procurar outro caminho.
+
+### 5. Timeout, espera e prova
+
+- Timeout = esperado. `python -c "import time; time.sleep(180)"`.
+- `get_instagram_posts` (instagram_account_id 17841400421978635, account_id act_1679063009779975, time_range last_7d, limit 3). O post novo aparece no topo com a legenda.
+- Reportar: permalink + horário. Se não apareceu em 3 min, esperar mais 3 e conferir de novo. Só repetir o publish se em 10 min não tiver saído.
+
+### 6. Registrar
+- `memoria_guardar` no Ark Brain (tipo `projeto`, projeto do cliente) com permalink, data e hora.
+- Se veio de uma rotina que falhou, registrar o motivo.
+
+## Agendamento futuro (exceção, só quando o Gabriel der dia e hora)
+
+Quando ele pedir horário futuro, criar a rotina de nuvem, mas com três obrigações novas:
+
+1. **Avisar a cota**: o Pipeboard Free tem limite semanal de comandos. Se já houve publicação via API na semana, dizer isso antes de agendar. Upgrade é decisão dele (pipeboard.co/pricing).
+2. **O prompt da rotina precisa levar `account_id`** (o modelo abaixo já leva).
+3. **Conferir no dia**: quando o Gabriel abrir sessão depois do horário (ou perguntar "saiu?"), rodar `get_instagram_posts` primeiro. Se não saiu, `RemoteTrigger list_runs` + `get_run_log`, e publicar direto pelo padrão acima. Não esperar ele reclamar.
+
+Horário padrão da conta se ele não der: terça ou quarta 11h26, sexta 17h46. UTC = Brasília + 3h. Evitar minuto 0 e 30.
+
+### Body do POST (RemoteTrigger action create)
 
 ```json
 {
@@ -60,12 +109,12 @@ Body do POST:
 }
 ```
 
-O `<PROMPT>` segue o modelo validado (publicou o post da clínica 17/08 e o do lipedema 19/08):
+### Prompt da rotina
 
 ```
 Você é o agente de publicação da ARK Content. Sua única tarefa: publicar AGORA um Reel no Instagram da Farmácia Vivenda usando a ferramenta publish_instagram_media do conector Pipeboard-Meta-Ads (carregue as ferramentas do conector se necessário).
 
-Parâmetros EXATOS da chamada:
+Parâmetros EXATOS da chamada (account_id é obrigatório, sem ele a API recusa):
 - instagram_user_id: 17841400421978635
 - account_id: act_1679063009779975
 - media_type: REELS
@@ -76,20 +125,19 @@ Parâmetros EXATOS da chamada:
 
 <LEGENDA>
 
-REGRA ANTI-DUPLICATA (importante): se a chamada der timeout ou erro ambíguo, NÃO repita imediatamente. Espere 3 minutos e verifique com get_instagram_posts (instagram_account_id 17841400421978635, account_id act_1679063009779975, time_range last_7d) se um post com essa legenda já apareceu. Só chame publish de novo se tiver certeza de que NÃO saiu. O vídeo tem ~<N>MB e o processamento do container pode demorar alguns minutos: isso é normal.
+REGRA ANTI-DUPLICATA: se a chamada der timeout, NÃO repita. Espere 3 minutos e verifique com get_instagram_posts (instagram_account_id 17841400421978635, account_id act_1679063009779975, time_range last_7d) se um post com essa legenda já apareceu. Só chame publish de novo se tiver certeza de que NÃO saiu. O vídeo tem ~<N>MB e o processamento pode demorar alguns minutos.
+
+Se a resposta for erro de cota do Pipeboard ("weekly limit", "trial commands"), NÃO tente de novo. Envie PushNotification com o texto "POST DA VIVENDA NÃO SAIU: cota do Pipeboard. Publicar manual." e encerre.
 
 Ao final, informe o permalink do post publicado como resultado.
 ```
 
-### 5. Verificar (obrigatório, é o deploy-verificado do agendamento)
-- `RemoteTrigger action get` na rotina criada: conferir `enabled: true` e `next_run_at` igual ao horário pedido.
-- Reportar pro Gabriel: nome da rotina, horário local, e a URL claude.ai/code/routines que o create retorna.
-- No dia seguinte ao disparo (ou quando Gabriel perguntar): `get_instagram_posts` pra confirmar que saiu, e `RemoteTrigger list_runs` se não saiu.
+### Verificar a rotina criada
+- `RemoteTrigger action get`: `enabled: true` e `next_run_at` igual ao horário pedido.
+- Reportar nome, horário local e a URL claude.ai/code/routines.
+- Rotina one-shot se desativa sozinha depois de disparar (`ended_reason: run_once_fired`). Isso NÃO prova que publicou. Só o feed prova.
 
-## Armadilhas conhecidas
-
-- `publish_instagram_media` dá timeout no MCP mas PUBLICA. Nunca repetir às cegas, sempre conferir com get_instagram_posts primeiro.
-- mLabs é beco sem saída pra vídeo grande: import do Drive falha acima de 100MB e upload da extensão tem teto de 10MB. Não usar.
-- Agendamento nativo do Meta Business Suite é alternativa válida quando o Gabriel pedir de dentro do gerenciador, mas o caminho padrão é a rotina de nuvem, que já tem collab e legenda validados por API.
-- Rotina one-shot se desativa sozinha depois de disparar (`ended_reason: run_once_fired`). Isso é sinal de sucesso, não de problema.
-- Cron local (CronCreate) morre com a sessão. NUNCA usar pra agendamento de post.
+## Histórico que sustenta a regra
+- 17/08 e 19/08: rotina publicou (clínica, lipedema). Funcionava enquanto a cota do Pipeboard sobrava.
+- 10/09 a 14/09: 5 rotinas publicaram (Café com Nutri 1 a 3, Dra. Maria Fernanda, Semana do Consumidor).
+- 17/09: rotina Café com Nutri 4 (Lara Freire) falhou por cota. Ninguém viu. Publicado manual em 21/09 12h46, permalink https://www.instagram.com/reel/Ddjg2rZjeBH/. Gabriel fixou a regra nesse dia.

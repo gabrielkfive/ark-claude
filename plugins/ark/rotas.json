@@ -57,7 +57,7 @@
       "quando": "prova antes de entregar vídeo"
     },
     {
-      "gatilho": "agendar|agenda o post|publica(r)? (no|o) insta|programar post",
+      "gatilho": "agendar|agenda o post|publica(r)?( (no|o) insta)?|programar post|post .*(programad|agendad)|(saiu|postou) o (post|reel)|tem post|n[aã]o saiu",
       "skills": [
         "agendar-post",
         "ecc:social-publisher"
@@ -386,6 +386,40 @@
         "semanal"
       ],
       "quando": "rodada semanal"
+    }
+  ],
+  "processos": [
+    {
+      "nome": "construção (pipeline superpowers)",
+      "gatilho": "cria(r)?|constr[uó]|implementa|remodel|refaz|migra|nova (aba|rota|tela|feature|funcionalidade)|adiciona|monta (o|a|um|uma) (sistema|site|painel|app|aba|tela|landing)|redesign|refator|lote \\d",
+      "passos": [
+        "superpowers:brainstorming: fechar o escopo do lote com os defaults do doc ou do pedido, sem formulário; mostrar a decisão em poucas linhas",
+        "superpowers:using-git-worktrees: se o repo tiver alteração de outra sessão, trabalhar em worktree a partir de main, sem tocar na working tree principal",
+        "superpowers:writing-plans: plano em docs/superpowers/plans/AAAA-MM-DD-<lote>.md, tarefas pequenas, cada uma com prova",
+        "replica-fiel: se houver referência visual, tokens viram variáveis e a prova lado a lado vem antes de avançar",
+        "superpowers:subagent-driven-development (ou executing-plans): rodar o plano; superpowers:test-driven-development onde houver lógica",
+        "superpowers:verification-before-completion + deploy-verificado: URL, marcador de versão, screenshot claro e escuro. Sem isso não é 'pronto'",
+        "superpowers:requesting-code-review no fim do lote; superpowers:finishing-a-development-branch para mesclar",
+        "seguir para o próximo lote sem esperar pedido, mostrando URL, marcador, screenshots e prova lado a lado"
+      ]
+    },
+    {
+      "nome": "bug",
+      "gatilho": "bug|erro|quebrou|n[aã]o (funciona|abre|carrega|salva|atualiza)|travou|1102|exce(cao|ção|ption)|regress",
+      "passos": [
+        "superpowers:systematic-debugging: reproduzir e achar a causa antes de propor correção",
+        "superpowers:test-driven-development: teste que reproduz o bug, depois a correção",
+        "superpowers:verification-before-completion + deploy-verificado se for produção"
+      ]
+    },
+    {
+      "nome": "entregável (proposta, deck, relatório, carrossel, estudo)",
+      "gatilho": "proposta|deck|apresenta[cç][aã]o|relat[oó]rio|carross|estudo|documento|doc pra (eu|mim)",
+      "passos": [
+        "skill da entrega (proposta, relatorio-dia, all-hands, carrossel) ou frontend-design; replica-fiel se houver referência visual",
+        "python ~/ark-claude/plugins/ark/scripts/validar_entregavel.py <arquivo> --final antes de entregar",
+        "arquivo HTML local em Documents/ARK CONTENT (nunca Artifact); se for Worker, deploy-verificado"
+      ]
     }
   ]
 }
