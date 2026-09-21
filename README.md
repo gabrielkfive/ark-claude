@@ -41,4 +41,4 @@ Exit 2 = bloqueou. Exit 0 sem saída = passou.
 2. Descrição em terceira pessoa, com "use quando..." e termos que o Gabriel realmente usa.
 3. Corpo curto. Modelo em `assets/`, validador em `scripts/`, detalhe em `references/`.
 4. Testada na próxima entrega real antes de ser considerada pronta.
-5. Zero uso em 60 dias = sai.
+5. Zero uso em 60 dias = eu estou deixando de invocar. Ajustar o gatilho, não apagar.
