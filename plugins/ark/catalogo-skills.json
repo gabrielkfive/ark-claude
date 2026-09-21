@@ -2,7 +2,7 @@
  "agendar-post": {
   "nome": "agendar-post",
   "plugin": "",
-  "descricao": "Agenda publicação de Reel/post no Instagram da Farmácia Vivenda (ou outro cliente) a partir de um link do Drive. Cria rotina de nuvem que publica sozinha, sem depender do PC ligado.",
+  "descricao": "Publica ou agenda Reel/post no Instagram da Farmácia Vivenda (ou outro cliente) a partir de um link do Drive. REGRA DO GABRIEL (21/09/2026): o jeito que funciona é publicar direto pelo conector Pipeboard na sessão, com account_id, esperar o timeout, conferir o feed e reportar o permalink. Rotina de nuvem só pra horário futuro explícito, e sempre com conferência no dia.",
   "caminho": "C:\\Users\\USER\\.claude\\skills\\agendar-post\\SKILL.md"
  },
  "agents-sdk": {
@@ -310,6 +310,30 @@
   "plugin": "ark-claude",
   "descricao": "Use SOMENTE quando Gabriel pedir explicitamente roteiro, roteiros técnicos, script de vídeo, roteiro de captação ou roteiro de anúncio. Treinada no acervo real aprovado da ARK (Mundo Livre v2, Royal Face Inauguração, Vivenda Dia dos Pais, Vivenda Copa). Se ele disser \"na mão\" ou \"sem skill\", não usar.",
   "caminho": "C:\\Users\\USER\\.claude\\plugins\\cache\\ark-claude\\ark\\1.0.0\\skills\\roteiro\\SKILL.md"
+ },
+ "ark-claude:all-hands": {
+  "nome": "all-hands",
+  "plugin": "ark-claude",
+  "descricao": "Prepara o All Hands mensal da ARK no WorkFlowArk (rota /allhands, slides em ahBuildSlides, narrativa nas chaves set_* de wfa-allhands) com números medidos na fonte, e a pauta em docs/. Use quando o Gabriel pedir \"all hands\", \"reunião do mês\", \"fechamento de setembro\", \"deck do mês pra equipe\", \"as 5 do Caio\", ou virar o mês do All Hands. Não use para relatório de trabalho do dia (relatorio-dia) nem deck de cliente (planejamento-estrategico).",
+  "caminho": "C:\\Users\\USER\\.claude\\plugins\\cache\\ark-claude\\ark\\1.1.0\\skills\\all-hands\\SKILL.md"
+ },
+ "ark-claude:carrossel": {
+  "nome": "carrossel",
+  "plugin": "ark-claude",
+  "descricao": "Gera carrossel de Instagram pra ARK (@arkcontentt) ou cliente em lâminas 1080x1350 na identidade ARK (foto real + véu, kicker amarelo, Sora com uma palavra amarela, Inter no corpo, CTA WhatsApp) usando o gerador gerar.py + spec.py com Playwright no Chrome. Use quando o Gabriel pedir carrossel, \"post em lâminas\", \"caso real pro Instagram\", \"conteúdo institucional da ARK\", ou quando o perfil da ARK estiver sem post. Não use para Reel ou vídeo (roteiro) nem legenda solta.",
+  "caminho": "C:\\Users\\USER\\.claude\\plugins\\cache\\ark-claude\\ark\\1.1.0\\skills\\carrossel\\SKILL.md"
+ },
+ "ark-claude:proposta": {
+  "nome": "proposta",
+  "plugin": "ark-claude",
+  "descricao": "Monta proposta comercial da ARK Content em HTML único na identidade real (Sora + Inter, #FEEF02, fundo #0A0A0A) usando o kit em MARCAS/ARK e o montar.py, e publica em Worker próprio. Use quando o Gabriel pedir proposta, orçamento, \"monta a proposta pro <cliente>\", documento comercial, ou quando um lead novo precisar de material pra fechar. Não use para planejamento estratégico (planejamento-estrategico) nem contrato (gerador de contratos do WorkFlowArk).",
+  "caminho": "C:\\Users\\USER\\.claude\\plugins\\cache\\ark-claude\\ark\\1.1.0\\skills\\proposta\\SKILL.md"
+ },
+ "ark-claude:relatorio-dia": {
+  "nome": "relatorio-dia",
+  "plugin": "ark-claude",
+  "descricao": "Monta o relatório do dia (ou de um período) da ARK em deck HTML único na identidade ARK, a partir das sessões reais do Claude Code, memórias, git log, disco e curl nas URLs. Use quando o Gabriel pedir \"relatório do dia\", \"compilado de hoje\", \"o que foi feito ontem\", \"me mostra tudo que rodou\", \"as sessões sumiram\", ou relatório semanal/mensal de trabalho. Não use para relatório de cliente (planejamento-estrategico) nem All Hands (all-hands).",
+  "caminho": "C:\\Users\\USER\\.claude\\plugins\\cache\\ark-claude\\ark\\1.1.0\\skills\\relatorio-dia\\SKILL.md"
  },
  "claude-plugins-official:frontend-design": {
   "nome": "frontend-design",
