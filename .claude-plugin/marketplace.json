@@ -1,0 +1,13 @@
+{
+  "name": "ark-claude",
+  "owner": { "name": "ARK Content" },
+  "metadata": { "description": "Skills, hooks e regras da ARK Content para o Claude Code. Instalar no Mac e no PC." },
+  "plugins": [
+    {
+      "name": "ark",
+      "source": "./plugins/ark",
+      "description": "Rotinas da ARK: maratona, deploy-verificado, agendar-post, roteiro, retomar + hooks de qualidade (sem travessão, sem CDN, sem Artifact, pronto medido)",
+      "version": "1.0.0"
+    }
+  ]
+}
