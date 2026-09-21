@@ -13,9 +13,14 @@ Hooks (em `plugins/ark/hooks/`):
 | sem_travessao | PostToolUse Write/Edit em .html/.md/.txt | Bloqueia travessão, meio-traço e linha de desenho em entregável e manda corrigir |
 | sem_cdn | PostToolUse Write/Edit em .html | Avisa se a página depende de script/CSS de CDN externo |
 | sem_artifact | PreToolUse Artifact | Nega publicação como Artifact (leitura e listagem seguem liberadas) |
+| roteador | UserPromptSubmit | Lê o pedido e injeta as skills instaladas que casam (rotas.json + catalogo-skills.json), pra serem invocadas antes da resposta |
 | pronto_medido | Stop | Se a resposta diz "no ar" sem curl/fetch na URL de produção na rodada, devolve pra medir |
 
 Os hooks ignoram tudo dentro de `.claude/`, `.agents/`, `ark-claude/`, `node_modules/` e da pasta temporária do Claude.
+
+## Roteador de skills
+
+Mapa curado em `plugins/ark/rotas.json` (vocabulário do Gabriel em regex -> skills). Catálogo de todas as skills da máquina em `plugins/ark/catalogo-skills.json`, regenerado com `python scripts/gerar_catalogo.py`. Testar: `printf '{"prompt":"..."}' | bash plugins/ark/hooks/run.sh roteador`.
 
 ## Instalar
 

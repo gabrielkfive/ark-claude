@@ -3,7 +3,7 @@ import json
 import os
 import sys
 
-for _f in (sys.stdout, sys.stderr):
+for _f in (sys.stdin, sys.stdout, sys.stderr):
     try:
         _f.reconfigure(encoding="utf-8")
     except Exception:

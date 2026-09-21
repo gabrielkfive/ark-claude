@@ -4,8 +4,16 @@
       {
         "matcher": "Write|Edit",
         "hooks": [
-          { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" sem_travessao", "timeout": 10 },
-          { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" sem_cdn", "timeout": 10 }
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" sem_travessao",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" sem_cdn",
+            "timeout": 10
+          }
         ]
       }
     ],
@@ -13,14 +21,33 @@
       {
         "matcher": "Artifact",
         "hooks": [
-          { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" sem_artifact", "timeout": 10 }
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" sem_artifact",
+            "timeout": 10
+          }
         ]
       }
     ],
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" pronto_medido", "timeout": 15 }
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" pronto_medido",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" roteador",
+            "timeout": 10
+          }
         ]
       }
     ]

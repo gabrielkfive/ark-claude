@@ -1,0 +1,369 @@
+{
+  "_comentario": "Mapa curado: vocabulário do Gabriel (regex, sem acento, minúsculo) -> skills a invocar. Nome com ':' é skill de plugin (ecc:, superpowers:). Editar aqui e commitar; o roteador lê a cada pedido.",
+  "rotas": [
+    {
+      "gatilho": "roteir|script de v|reel|reels|short|tiktok|gancho|v[ií]deo curto|falas",
+      "skills": [
+        "roteiro",
+        "roteirista-viral",
+        "ecc:content-engine"
+      ],
+      "quando": "roteiro ou vídeo curto"
+    },
+    {
+      "gatilho": "captac|grava[cç]|cena|take|set de",
+      "skills": [
+        "roteiro",
+        "edicao-cinematografica"
+      ],
+      "quando": "captação"
+    },
+    {
+      "gatilho": "edi[cç][aã]o de v|editar v|corte|coloriz|render|resolve|lut|legend|timeline",
+      "skills": [
+        "edicao-cinematografica",
+        "conferir-video",
+        "ecc:video-editing",
+        "ecc:remotion-video-creation"
+      ],
+      "quando": "edição de vídeo"
+    },
+    {
+      "gatilho": "conferir v|v[ií]deo (ta|est[aá]) pronto|tremid|amarelad|vazou",
+      "skills": [
+        "conferir-video"
+      ],
+      "quando": "prova antes de entregar vídeo"
+    },
+    {
+      "gatilho": "agendar|agenda o post|publica(r)? (no|o) insta|programar post",
+      "skills": [
+        "agendar-post",
+        "ecc:social-publisher"
+      ],
+      "quando": "agendar publicação"
+    },
+    {
+      "gatilho": "conte[uú]do do m[eê]s|pauta|calend[aá]rio|plano de conte|o que (a gente )?posta|posts? d[oa] (semana|m[eê]s)|carross",
+      "skills": [
+        "producao-conteudo",
+        "social-media-strategy",
+        "ecc:content-engine",
+        "ecc:crosspost"
+      ],
+      "quando": "produção de conteúdo"
+    },
+    {
+      "gatilho": "planejamento|plano (trimestral|de 90|estrat)|diagn[oó]stico|4dx|mci|onde .* est[aá] e p(a)?ra onde",
+      "skills": [
+        "planejamento-estrategico",
+        "bmad-agent-marketing-agency",
+        "ecc:marketing-campaign",
+        "saas-marketing-suite"
+      ],
+      "quando": "planejamento estratégico"
+    },
+    {
+      "gatilho": "campanha|tr[aá]fego|meta ads|google ads|an[uú]ncio|criativo|cpm|cpc|roas|p[uú]blico|segmenta",
+      "skills": [
+        "ecc:marketing-campaign",
+        "marketing-arsenal",
+        "saas-marketing-suite"
+      ],
+      "quando": "campanha e mídia paga"
+    },
+    {
+      "gatilho": "farm[aá]cia|vivenda|manipula|m[eé]dic|prescri|receita|nutri",
+      "skills": [
+        "marketing-farmaceutico"
+      ],
+      "quando": "cliente farmacêutico"
+    },
+    {
+      "gatilho": "restaurante|bar |loja|neg[oó]cio local|google (business|meu neg)|avalia[cç][oõ]es|indica[cç][aã]o|seo local",
+      "skills": [
+        "local-business-growth",
+        "marketing-arsenal"
+      ],
+      "quando": "negócio local"
+    },
+    {
+      "gatilho": "marca|branding|identidade|tom de voz|posicionamento|manifesto|naming|nome (da|pra) (marca|empresa)",
+      "skills": [
+        "ecc:brand-discovery",
+        "ecc:brand-voice",
+        "marketing-arsenal"
+      ],
+      "quando": "marca e posicionamento"
+    },
+    {
+      "gatilho": "artigo|blog|newsletter|texto longo|linkedin|post (pro|no) linkedin|threads",
+      "skills": [
+        "ecc:article-writing",
+        "ecc:content-engine",
+        "ecc:crosspost"
+      ],
+      "quando": "texto longo e distribuição"
+    },
+    {
+      "gatilho": "e-?mail|cold|outreach|prospec|sdr|lead|lista de (empresas|contatos)|follow.?up",
+      "skills": [
+        "ecc:lead-intelligence",
+        "ecc:investor-outreach",
+        "marketing-arsenal",
+        "ecc:email-ops"
+      ],
+      "quando": "prospecção e e-mail"
+    },
+    {
+      "gatilho": "pesquisa de mercado|concorr|benchmark|tend[eê]ncia|estuda (na|a) (net|internet)|f[oó]rum|github de projetos",
+      "skills": [
+        "ecc:market-research",
+        "ecc:deep-research",
+        "ecc:exa-search"
+      ],
+      "quando": "pesquisa"
+    },
+    {
+      "gatilho": "proposta|or[cç]amento|comercial|contrato|pitch|fechar cliente",
+      "skills": [
+        "marketing-arsenal",
+        "ecc:frontend-slides",
+        "ecc:investor-materials"
+      ],
+      "quando": "proposta comercial"
+    },
+    {
+      "gatilho": "investidor|franquia|plano de neg[oó]cio|valuation|s[oó]cio",
+      "skills": [
+        "ecc:investor-materials",
+        "ecc:investor-outreach",
+        "ecc:market-research"
+      ],
+      "quando": "investidor e negócio"
+    },
+    {
+      "gatilho": "deck|apresenta[cç][aã]o|slides?|all ?hands|relat[oó]rio (do dia|di[aá]rio|semanal|mensal)",
+      "skills": [
+        "ecc:frontend-slides",
+        "frontend-design:frontend-design",
+        "ui-ux-pro-max:ui-ux-pro-max"
+      ],
+      "quando": "deck e relatório em HTML"
+    },
+    {
+      "gatilho": "deploy|no ar|subir|wrangler|worker|cloudflare|publicar (o )?(web)?site|n[aã]o atualizou",
+      "skills": [
+        "deploy-verificado",
+        "cloudflare",
+        "wrangler",
+        "workers-best-practices",
+        "ecc:canary-watch",
+        "ecc:browser-qa"
+      ],
+      "quando": "deploy e produção"
+    },
+    {
+      "gatilho": "\\b(web)?site\\b|landing|p[aá]gina|tela|interface|\\bui\\b|\\bux\\b|dashboard|painel|componente|bot[aã]o|modal|card",
+      "skills": [
+        "frontend-design:frontend-design",
+        "ui-ux-pro-max:ui-ux-pro-max",
+        "emil-design-eng",
+        "ecc:make-interfaces-feel-better",
+        "ecc:design-system"
+      ],
+      "quando": "UI e páginas"
+    },
+    {
+      "gatilho": "igual (a|o) (isso|esse|essa)|replica|refer[eê]ncia visual|padr[aã]o apple|n[aã]o (mudou|ficou parecido)|ficou amador|print (do|da) (site|tela)",
+      "skills": [
+        "replica-fiel",
+        "apple-design",
+        "emil-design-eng"
+      ],
+      "quando": "replicar referência visual"
+    },
+    {
+      "gatilho": "anima|motion|transi[cç]|spring|gesto|arrast|mais vivo|sensa[cç][aã]o",
+      "skills": [
+        "animate",
+        "ecc:motion-ui",
+        "ecc:motion-patterns",
+        "find-animation-opportunities",
+        "review-animations"
+      ],
+      "quando": "animação"
+    },
+    {
+      "gatilho": "vidro|glass|blur|transl[uú]cid",
+      "skills": [
+        "ecc:liquid-glass-design",
+        "apple-design"
+      ],
+      "quando": "liquid glass"
+    },
+    {
+      "gatilho": "gr[aá]fico|chart|visualiza|kpi|m[eé]trica",
+      "skills": [
+        "dataviz",
+        "ecc:dashboard-builder"
+      ],
+      "quando": "dados e gráficos"
+    },
+    {
+      "gatilho": "gerar (imagem|v[ií]deo|voz|[aá]udio)|avatar|dublagem|ia generativa|imagem (de|com) ia",
+      "skills": [
+        "ecc:fal-ai-media"
+      ],
+      "quando": "mídia gerada por IA (também o MCP CLAUDIO EDITOR)"
+    },
+    {
+      "gatilho": "whats",
+      "skills": [
+        "whatsapp-automation",
+        "whatsapp-automation-v2",
+        "ecc:messages-ops"
+      ],
+      "quando": "WhatsApp"
+    },
+    {
+      "gatilho": "drive|docs|sheets|planilha|google (doc|agenda|calend)|organizar (o )?drive|pastas",
+      "skills": [
+        "ecc:google-workspace-ops",
+        "organizar-drive"
+      ],
+      "quando": "Google Workspace"
+    },
+    {
+      "gatilho": "bug|erro|quebrou|n[aã]o (funciona|abre|carrega|salva)|travou|1102|exce(ção|ption)",
+      "skills": [
+        "superpowers:systematic-debugging",
+        "ecc:silent-failure-hunter"
+      ],
+      "quando": "bug"
+    },
+    {
+      "gatilho": "cria(r)? (uma )?(feature|funcionalidade|sistema|aba|m[oó]dulo|rota)|constr[uó]i|implementa|adiciona (no|ao) (sistema|workflowark)",
+      "skills": [
+        "superpowers:brainstorming",
+        "ecc:plan",
+        "ecc:feature-dev"
+      ],
+      "quando": "feature nova"
+    },
+    {
+      "gatilho": "sem parar|faz tudo|marcha|s[oó] pare quando|maratona|continua",
+      "skills": [
+        "maratona"
+      ],
+      "quando": "lote de entregas"
+    },
+    {
+      "gatilho": "voltei|onde paramos|retomar|continua de ontem|o que falta|me lembra",
+      "skills": [
+        "retomar",
+        "ecc:resume-session",
+        "ecc:sessions"
+      ],
+      "quando": "retomar trabalho"
+    },
+    {
+      "gatilho": "agente|autom[aá]t|ollama|cron|rotina|24/?7|jarvis|hermes|swarm|orquestr",
+      "skills": [
+        "ecc:autonomous-agent-harness",
+        "ecc:agentic-os",
+        "ecc:autonomous-loops",
+        "agents-sdk",
+        "ruflo-swarm:swarm-init"
+      ],
+      "quando": "agentes e automação"
+    },
+    {
+      "gatilho": "financeir|\\bdre\\b|cobran[cç]|fluxo de caixa|boleto|inadimpl|fatura",
+      "skills": [
+        "ecc:finance-billing-ops",
+        "ecc:customer-billing-ops"
+      ],
+      "quando": "financeiro"
+    },
+    {
+      "gatilho": "vale a pena|pr[oó]s e contras|decid|qual (é )?melhor|go.?no.?go|tu acha",
+      "skills": [
+        "ecc:council"
+      ],
+      "quando": "decisão"
+    },
+    {
+      "gatilho": "token|custo|gasto|caro|cr[eé]dito|cota",
+      "skills": [
+        "ecc:cost-tracking",
+        "ecc:context-budget",
+        "caveman"
+      ],
+      "quando": "custo e tokens"
+    },
+    {
+      "gatilho": "skill|hook|plugin|conector|mcp|otimiza(r)? (o )?claude|habilidade",
+      "skills": [
+        "superpowers:writing-skills",
+        "ecc:hookify-rules",
+        "ecc:skill-create",
+        "ecc:ecc-guide",
+        "ecc:config-gc"
+      ],
+      "quando": "configurar o Claude"
+    },
+    {
+      "gatilho": "swift|ios|iphone app|xcode",
+      "skills": [
+        "write-swift",
+        "ecc:swiftui-patterns"
+      ],
+      "quando": "iOS"
+    },
+    {
+      "gatilho": "seguran[cç]|senha|token vaz|webhook aberto|invas",
+      "skills": [
+        "ecc:security-review",
+        "ecc:security-scan"
+      ],
+      "quando": "segurança"
+    },
+    {
+      "gatilho": "tcc|acad[eê]mic|artigo cient|literatura|paper",
+      "skills": [
+        "ecc:scientific-thinking-literature-review"
+      ],
+      "quando": "acadêmico"
+    },
+    {
+      "gatilho": "assist(e|ir) (o|esse) v[ií]deo|o que (tem|fala) nesse v[ií]deo|transcreve|youtube|instagram\\.com/reel",
+      "skills": [
+        "watch:watch"
+      ],
+      "quando": "assistir vídeo"
+    },
+    {
+      "gatilho": "revis(a|ar) (o )?c[oó]digo|code review|pr |pull request",
+      "skills": [
+        "ecc:code-review",
+        "superpowers:requesting-code-review"
+      ],
+      "quando": "revisão de código"
+    },
+    {
+      "gatilho": "briefing|contexto do cliente|quem [eé] o cliente|monta o brief",
+      "skills": [
+        "briefing-cliente"
+      ],
+      "quando": "brief de cliente"
+    },
+    {
+      "gatilho": "semanal|temperatura|rodada da semana",
+      "skills": [
+        "semanal"
+      ],
+      "quando": "rodada semanal"
+    }
+  ]
+}
