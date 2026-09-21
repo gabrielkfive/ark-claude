@@ -2,6 +2,27 @@
   "_comentario": "Mapa curado: vocabulário do Gabriel (regex, sem acento, minúsculo) -> skills a invocar. Nome com ':' é skill de plugin (ecc:, superpowers:). Editar aqui e commitar; o roteador lê a cada pedido.",
   "rotas": [
     {
+      "gatilho": "relat[oó]rio (do dia|di[aá]rio|de hoje|de ontem|semanal|mensal)|compilado|o que foi feito (hoje|ontem)|tudo que rodou|sess[oõ]es sumiram",
+      "skills": [
+        "relatorio-dia"
+      ],
+      "quando": "relatório do dia"
+    },
+    {
+      "gatilho": "all ?hands|reuni[aã]o do m[eê]s|fechamento de (setembro|outubro|novembro|dezembro|janeiro|fevereiro|mar[cç]o|abril|maio|junho|julho|agosto)|as 5 do caio|deck do m[eê]s",
+      "skills": [
+        "all-hands"
+      ],
+      "quando": "All Hands"
+    },
+    {
+      "gatilho": "carross|l[aâ]minas|post (institucional|da ark)|caso real pro insta",
+      "skills": [
+        "carrossel"
+      ],
+      "quando": "carrossel"
+    },
+    {
       "gatilho": "roteir|script de v|reel|reels|short|tiktok|gancho|v[ií]deo curto|falas",
       "skills": [
         "roteiro",
@@ -44,7 +65,7 @@
       "quando": "agendar publicação"
     },
     {
-      "gatilho": "conte[uú]do do m[eê]s|pauta|calend[aá]rio|plano de conte|o que (a gente )?posta|posts? d[oa] (semana|m[eê]s)|carross",
+      "gatilho": "conte[uú]do do m[eê]s|pauta|calend[aá]rio|plano de conte|o que (a gente )?posta|posts? d[oa] (semana|m[eê]s)",
       "skills": [
         "producao-conteudo",
         "social-media-strategy",
@@ -127,6 +148,7 @@
     {
       "gatilho": "proposta|or[cç]amento|comercial|contrato|pitch|fechar cliente",
       "skills": [
+        "proposta",
         "marketing-arsenal",
         "ecc:frontend-slides",
         "ecc:investor-materials"
@@ -143,7 +165,7 @@
       "quando": "investidor e negócio"
     },
     {
-      "gatilho": "deck|apresenta[cç][aã]o|slides?|all ?hands|relat[oó]rio (do dia|di[aá]rio|semanal|mensal)",
+      "gatilho": "deck|apresenta[cç][aã]o|slides?",
       "skills": [
         "ecc:frontend-slides",
         "frontend-design:frontend-design",
