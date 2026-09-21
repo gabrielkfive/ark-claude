@@ -4,7 +4,7 @@ Plugin do Claude Code com as rotinas e regras de qualidade da ARK Content. Um re
 
 ## O que tem
 
-Skills (em `plugins/ark/skills/`): maratona, deploy-verificado, agendar-post, roteiro, retomar.
+Skills (em `plugins/ark/skills/`): cópia sincronizável de maratona, deploy-verificado, agendar-post, roteiro, retomar. As originais continuam em `~/.claude/skills`; este plugin existe pra levar hooks e skills pro Mac, não pra substituir nada.
 
 Hooks (em `plugins/ark/hooks/`):
 
