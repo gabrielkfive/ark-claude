@@ -359,8 +359,9 @@
       "quando": "acadêmico"
     },
     {
-      "gatilho": "assist(e|ir) (o|esse) v[ií]deo|o que (tem|fala) nesse v[ií]deo|transcreve|youtube|instagram\\.com/reel",
+      "gatilho": "assist(e|ir) (o|esse) v[ií]deo|o que (tem|fala) nesse v[ií]deo|transcreve|youtube|instagram\\.com/reel|instagram\\.com/(reel|p)/|youtu\\.?be|tiktok\\.com|faz isso a[ií]|aprende com (esse|o) v[ií]deo",
       "skills": [
+        "assistir",
         "watch:watch"
       ],
       "quando": "assistir vídeo"
@@ -386,6 +387,15 @@
         "semanal"
       ],
       "quando": "rodada semanal"
+    },
+    {
+      "gatilho": "conceit|plano estrat[eé]gico conceitual|identidade visual|est[eé]tica de filme|cinema|refer[eê]ncias? (do brasil|criativ)|coisa de maluco|jev|raio.?x de an[uú]ncio",
+      "skills": [
+        "kit-conceito-cinema",
+        "planejamento-estrategico",
+        "roteiro"
+      ],
+      "quando": "plano conceitual, cinema, referências e JEV"
     }
   ],
   "processos": [

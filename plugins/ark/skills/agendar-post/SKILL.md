@@ -3,6 +3,8 @@ name: agendar-post
 description: Publica ou agenda Reel/post no Instagram da Farmácia Vivenda (ou outro cliente) a partir de um link do Drive. REGRA DO GABRIEL (21/09/2026): o jeito que funciona é publicar direto pelo conector Pipeboard na sessão, com account_id, esperar o timeout, conferir o feed e reportar o permalink. Rotina de nuvem só pra horário futuro explícito, e sempre com conferência no dia.
 ---
 
+> **Aviso 15/10/2026: Pipeboard em cancelamento.** O Gabriel cancelou o teste do Pipeboard (o pago limita a 3 contas). Enquanto o conector responder, segue valendo o que está abaixo. Se ele cair: anúncios e métricas pelo `meta-ads-mcp` local (`mcp__meta-ads__*`) com token próprio do Business Manager; o pacote aberto NÃO tem `publish_instagram_media` nem `get_instagram_posts`, então publicação e posts orgânicos vão direto pela Instagram Graph API com o mesmo token. Google Ads: MCP oficial do Google, depende do developer token da MCC.
+
 # Publicar / Agendar Post (Instagram da Vivenda e outros clientes)
 
 ## A regra (Gabriel, 21/09/2026: "é assim que você posta, dos outros jeitos não dá certo")
