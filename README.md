@@ -47,3 +47,14 @@ Exit 2 = bloqueou. Exit 0 sem saída = passou.
 3. Corpo curto. Modelo em `assets/`, validador em `scripts/`, detalhe em `references/`.
 4. Testada na próxima entrega real antes de ser considerada pronta.
 5. Zero uso em 60 dias = eu estou deixando de invocar. Ajustar o gatilho, não apagar.
+
+## Ferramentas do toolkit e xtool (18/10/2026)
+
+Um comando instala pnpm, fd, Codex, Graphify, Ponytail e as skills de projeto do WorkFlowArk
+(supabase-postgres-best-practices, shadcn, differential-review, vercel-react-best-practices,
+find-skills). Pula o que já existe e mostra um resumo no fim.
+
+- PC: `powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\ark-claude\instalar-ferramentas.ps1"`
+- Mac: `bash ~/ark-claude/instalar-ferramentas.sh` (também instala o xtool)
+
+xtool (app de iPhone pelo Claude Code): `docs/xtool.md`.
