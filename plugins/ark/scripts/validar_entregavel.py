@@ -45,7 +45,8 @@ if re.search(r"a preencher", html, re.I):
 if final:
     if not re.search(r"<title>\s*\S", html, re.I):
         erros.append("sem <title>")
-    if re.search(r"\bTODO\b|\bXXX\b|lorem ipsum", html, re.I):
+    # TODO/XXX só em maiúscula: "todo dia" e "todo mês" são português, não pendência.
+    if re.search(r"\bTODO\b|\bXXX\b", html) or re.search(r"lorem ipsum", html, re.I):
         erros.append("TODO/XXX/lorem ipsum no texto")
 
 if erros:

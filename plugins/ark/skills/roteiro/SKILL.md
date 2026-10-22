@@ -91,6 +91,10 @@ Origem: captação Vivenda 21/10 saiu desorganizada (Christopher reclamou). A eq
 ## ENTREGA
 
 1. DOCX na pasta do cliente, padrão `Roteiros_Tecnicos_<Cliente>_<Tema>.docx`, em `Documents\ARK CONTENT\ROTEIROS\` ou na pasta CLIENTES correspondente.
-2. Versão online: NUNCA criar Worker novo por roteiro (a conta grátis tem limite de 100 Workers e em 22/10 já eram 70). Publicar como página dentro do Worker único de documentos da ARK, com o checklist marcável salvando o progresso.
+2. Versão online: NUNCA criar Worker novo por roteiro (a conta grátis tem limite de 100 Workers e em 22/10 já eram 70). Publicar dentro do Worker único `ark-docs` (`Documents\ARK CONTENT\WORKERS\ark-docs`):
+   a. Visual OBRIGATÓRIO: kit escuro da ARK no molde da Jornada Biomédica, nunca a identidade do cliente. Partir de `src\vivenda-captacao-21-10\captacao.src.html` (capa com ficha, Ler antes de tudo, takes por bloco, um bloco por vídeo, roteiro de bolso, aviso à equipe).
+   b. Fonte em `src\<cliente>-<doc>\<doc>.src.html`, montar com `python MARCAS\ARK\montar.py <src> public\<cliente>\<doc>\index.html`.
+   c. Cada take é `<label class="take" data-ck="id-curto"><input type="checkbox"><p><b>take</b><em>detalhe</em></p></label>` e a página inclui `<script src="/_ark/checklist.js" defer></script>` e `<p class="prog" id="prog">`. O progresso salva no D1 e aparece em `https://ark-docs.arkcontent.workers.dev/painel/` (chave em `ark-docs\.painel-key.txt`).
+   d. Atualizar o marcador `ark-docs-AAAAMMDDx` na página e no `vars.BUILD` do wrangler.jsonc, `npx wrangler deploy`, conferir o marcador na URL.
 3. Volume padrão 4 a 12 roteiros. Pedido com 3+ entregas ativa a skill maratona.
 3. Resumo no chat: modo usado, lista de roteiros com objetivo, referências pesquisadas e o que é mecânica nova.
