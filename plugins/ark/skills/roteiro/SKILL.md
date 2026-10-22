@@ -59,6 +59,23 @@ Gancho real aprovado: "Faltam 5 dias pro Dia dos Pais. Eu e meu irmão resolvemo
 
 Abre com a seção "A REALIDADE DA CAPTAÇÃO (LER ANTES DE TUDO)": janela de horário, luz real do lugar, equipamento real, o que alinhar com o cliente ANTES do dia. Define PRIORIDADE ZERO do dia (o que sai primeiro se faltar tempo). Organiza por bloco de luz e locação, não por ordem de roteiro. Captação é VOLUME: banco de takes de 10 a 20 segundos pra 3 meses de conteúdo, "na dúvida entre repetir uma cena até ficar perfeita e captar mais um pedaço do lugar, capta o lugar". Roteiro é mapa de edição, não lista de cenas pra perseguir. Instruir o take: "captar 10 minutos de jogo para tirar 12 segundos".
 
+BASE OFICIAL desde 05/10: Guia de Produção da Jornada Biomédica (Vivenda), em `CLIENTES\FARMÁCIA VIVENDA\EVENTOS\STAND\PRODUCAO-ARK` (gerar_guia.py + conteudo_v2.py). Uma página por vídeo: Onde gravar, tabela TEMPO | IMAGEM | FALA com falas literais, Direção para o produtor, Imagens obrigatórias, Texto para a edição. O mesmo documento serve quem grava, quem acompanha, quem edita ao vivo e quem edita depois. Reler o modelo antes de escrever.
+
+## FECHAMENTO OBRIGATÓRIO DE TODO ROTEIRO DE CAPTAÇÃO (regra 22/10)
+
+Origem: captação Vivenda 21/10 saiu desorganizada (Christopher reclamou). A equipe não quis foto reunida porque ninguém avisou que teria foto e as meninas não estavam maquiadas. Todo documento de captação termina com os 3 blocos abaixo, sem exceção:
+
+1. CHECKLIST DE CAPTAÇÃO marcável, por roteiro e por take ("Roteiro 3, take 2: bancada com fórmula, 15 s"). É por ele que o Gabriel acompanha de longe quanto já foi gravado e o captador se autodireciona.
+2. ROTEIRO DE BOLSO: versão abreviada, uma linha por vídeo (onde, quem, fala principal, duração), pra ler no celular durante a gravação.
+3. MENSAGEM PARA A EQUIPE DO CLIENTE, pronta pra colar no WhatsApp e enviada com no mínimo 48 h de antecedência. Sempre cobre:
+   a. Data, horário de início e quem precisa chegar mais cedo.
+   b. Quem aparece em cada vídeo, e se vai ter foto ou vídeo de equipe reunida.
+   c. Aparência: maquiagem, cabelo, uniforme, cor de roupa a evitar.
+   d. Objetos, ornamentos e produtos necessários, em forma de pergunta de disponibilidade ("vocês têm X, Y e Z pra gente usar?").
+   e. Local que precisa estar arrumado ou liberado, e o que não pode faltar no estoque.
+   f. Pendências que o cliente precisa confirmar até uma data.
+   Escrita como gente, curta, sem jargão de audiovisual.
+
 ## REGRAS DE FORMA (inegociáveis)
 
 1. FALAS LITERAIS entre aspas, com nome de quem fala. "HUGO: 'Você já conheceu o Mundo Livre? Não? Então entra.'" Nunca "o dono apresenta o bar".
@@ -74,5 +91,6 @@ Abre com a seção "A REALIDADE DA CAPTAÇÃO (LER ANTES DE TUDO)": janela de ho
 ## ENTREGA
 
 1. DOCX na pasta do cliente, padrão `Roteiros_Tecnicos_<Cliente>_<Tema>.docx`, em `Documents\ARK CONTENT\ROTEIROS\` ou na pasta CLIENTES correspondente.
-2. Volume padrão 4 a 12 roteiros. Pedido com 3+ entregas ativa a skill maratona.
+2. Versão online: NUNCA criar Worker novo por roteiro (a conta grátis tem limite de 100 Workers e em 22/10 já eram 70). Publicar como página dentro do Worker único de documentos da ARK, com o checklist marcável salvando o progresso.
+3. Volume padrão 4 a 12 roteiros. Pedido com 3+ entregas ativa a skill maratona.
 3. Resumo no chat: modo usado, lista de roteiros com objetivo, referências pesquisadas e o que é mecânica nova.
