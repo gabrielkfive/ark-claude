@@ -6,8 +6,8 @@
     {
       "name": "ark",
       "source": "./plugins/ark",
-      "description": "Rotinas da ARK: maratona, deploy-verificado, agendar-post, roteiro, retomar, proposta, relatorio-dia, all-hands, carrossel + roteador de skills + hooks de qualidade (sem travessão, sem CDN, sem Artifact, pronto medido)",
-      "version": "1.3.0"
+      "description": "Rotinas da ARK: maratona, deploy-verificado, agendar-post, roteiro, retomar, proposta, relatorio-dia, all-hands, carrossel, tráfego pago (trafego-pago, spy, bulk-creative, ads-score, competitive-ads-extractor) + roteador de skills + hooks de qualidade (sem travessão, sem CDN, sem Artifact, pronto medido)",
+      "version": "1.4.0"
     }
   ]
 }
