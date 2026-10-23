@@ -93,6 +93,18 @@
       "quando": "planejamento estratégico"
     },
     {
+      "gatilho": "tr[aá]fego|m[ií]dia paga|meta ads|facebook ads|google ads|gerenciador|campanha|conjunto de an|an[uú]ncio|criativo|biblioteca de an|impulsion|verba|or[cç]amento de m[ií]dia|\\bcpm\\b|\\bcpc\\b|\\bctr\\b|\\bcpa\\b|\\bcpl\\b|roas|frequ[eê]ncia|pixel|lookalike|p[uú]blico|segmenta|\\bspy\\b|espia|bulk.?creative|ads.?score|/ads",
+      "skills": [
+        "trafego-pago",
+        "claude-ads:ads",
+        "spy",
+        "bulk-creative",
+        "ads-score",
+        "competitive-ads-extractor"
+      ],
+      "quando": "tráfego pago (Gabriel, Danilo, Rosiron): maestro trafego-pago + claude-ads (/ads meta) + spy/bulk-creative/ads-score/competitive-ads-extractor"
+    },
+    {
       "gatilho": "campanha|tr[aá]fego|meta ads|google ads|an[uú]ncio|criativo|cpm|cpc|roas|p[uú]blico|segmenta",
       "skills": [
         "ecc:marketing-campaign",
