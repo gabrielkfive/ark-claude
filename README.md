@@ -15,6 +15,7 @@ Hooks (em `plugins/ark/hooks/`):
 | sem_artifact | PreToolUse Artifact | Nega publicação como Artifact (leitura e listagem seguem liberadas) |
 | roteador | UserPromptSubmit | Lê o pedido e injeta as skills instaladas que casam (rotas.json + catalogo-skills.json), pra serem invocadas antes da resposta |
 | pronto_medido | Stop | Se a resposta diz "no ar" sem curl/fetch na URL de produção na rodada, devolve pra medir |
+| atualizar | SessionStart (startup) | Em segundo plano, no máximo a cada 6h: git pull do ~/ark-claude, atualiza o plugin ark e instala o que faltar de `plugins/ark/skills-equipe.json`. Nunca remove nada. Log em `~/.claude/ark-atualizar.log`; o resultado aparece na sessão seguinte |
 
 Os hooks ignoram tudo dentro de `.claude/`, `.agents/`, `ark-claude/`, `node_modules/` e da pasta temporária do Claude.
 

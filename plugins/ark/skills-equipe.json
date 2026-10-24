@@ -1,0 +1,19 @@
+{
+  "_comentario": "Skills e plugins que todo PC da ARK deve ter. O hook atualizar instala o que faltar no início da sessão (nunca remove nada). Pra acrescentar: uma linha aqui, commit e push.",
+  "plugins": [
+    {"nome": "frontend-design@claude-plugins-official", "fonte": "anthropics/claude-plugins-official"},
+    {"nome": "superpowers@claude-plugins-official", "fonte": "anthropics/claude-plugins-official"},
+    {"nome": "ecc@ecc", "fonte": "affaan-m/ECC"},
+    {"nome": "hallmark@hallmark", "fonte": "Nutlope/hallmark"},
+    {"nome": "ui-ux-pro-max@ui-ux-pro-max-skill", "fonte": "nextlevelbuilder/ui-ux-pro-max-skill"},
+    {"nome": "impeccable@impeccable", "fonte": "pbakaus/impeccable"},
+    {"nome": "diagram-design@diagram-design", "fonte": "cathrynlavery/diagram-design"},
+    {"nome": "humanizer@humanizer", "fonte": "blader/humanizer"},
+    {"nome": "i-have-adhd@i-have-adhd", "fonte": "ayghri/i-have-adhd"},
+    {"nome": "mattpocock-skills@mattpocock", "fonte": "mattpocock/skills"},
+    {"nome": "agent-skills@addy-agent-skills", "fonte": "addyosmani/agent-skills"}
+  ],
+  "skills": [
+    {"confere": "emil-design-eng", "fonte": "emilkowalski/skills"}
+  ]
+}

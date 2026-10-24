@@ -61,6 +61,16 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" atualizar",
+            "timeout": 15
+          }
+        ]
       }
     ]
   }
