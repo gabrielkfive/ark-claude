@@ -1,0 +1,10 @@
+[
+  {"id": "ar-ligar", "nome": "Ligar", "aparelho": "Ar-condicionado", "icone": "ar", "tipo": "url", "url": "${VM_AR_LIGAR}",
+   "frases": ["liga o ar", "ligar o ar", "liga o ar condicionado", "ligar ar condicionado"], "resposta": "Ar ligado."},
+  {"id": "ar-desligar", "nome": "Desligar", "aparelho": "Ar-condicionado", "icone": "ar", "tipo": "url", "url": "${VM_AR_DESLIGAR}",
+   "frases": ["desliga o ar", "desligar o ar", "desliga o ar condicionado", "desligar ar condicionado"], "resposta": "Ar desligado."},
+  {"id": "pc-ligar", "nome": "Ligar o PC", "icone": "pc", "tipo": "wol", "mac": "74:56:3C:F5:A6:C7",
+   "frases": ["liga o pc", "ligar o pc", "liga o computador"], "resposta": "Acordando o PC."},
+  {"id": "fila", "nome": "O que tem pra hoje", "icone": "lista", "tipo": "jarvis",
+   "texto": "Resuma em 3 linhas o que está pendente na fila e nas tarefas de hoje.", "frases": ["o que tem na fila", "minhas tarefas", "o que tem pra hoje"]}
+]

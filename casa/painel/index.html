@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#14151a">
+<title>JARVIS Escritório</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23f5c518'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --fundo: #14151a; --vidro: rgba(255,255,255,.055); --vidro-forte: rgba(255,255,255,.09);
+    --linha: rgba(255,255,255,.08); --texto: #f4f4f5; --fraco: #9a9ba3; --ark: #f5c518; --erro: #ff8a7a;
+    --brilho: rgba(245,197,24,.10);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--fundo);
+    background-image: radial-gradient(ellipse at 15% 0%, var(--brilho), transparent 55%);
+    color: var(--texto); overflow: hidden;
+    font-family: "Avenir Next", "Segoe UI Variable Display", "Segoe UI", Roboto, sans-serif;
+    -webkit-user-select: none; user-select: none; -webkit-font-smoothing: antialiased;
+  }
+  body.manha { --brilho: rgba(255,190,110,.13); }
+  body.noite { --brilho: rgba(90,120,255,.10); }
+  button, input { font-family: inherit; color: inherit; }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--ark); outline-offset: 3px; }
+
+  .tela { height: 100%; padding: 40px 44px 28px; display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; }
+  .meio { -webkit-flex: 1; flex: 1; display: -webkit-flex; display: flex; min-height: 0; }
+
+  /* Esquerda: a hora é a peça que se vê do outro lado da sala */
+  .ambiente { -webkit-flex: 1.1; flex: 1.1; display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; -webkit-justify-content: center; justify-content: center; padding-right: 40px; }
+  .hora { font-size: 168px; font-weight: 500; letter-spacing: -6px; line-height: .9; font-variant-numeric: tabular-nums; }
+  .hora .sep { color: var(--ark); }
+  .data { font-size: 26px; color: var(--fraco); margin-top: 18px; }
+  .resposta { margin-top: 44px; max-width: 560px; font-size: 28px; line-height: 1.35; min-height: 76px; }
+  .resposta .quem { display: block; font-size: 17px; color: var(--ark); margin-bottom: 6px; font-weight: 600; }
+  .resposta.erro { color: var(--erro); }
+
+  /* Direita: controles */
+  .controles { width: 46%; max-width: 560px; display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap; -webkit-align-content: center; align-content: center; margin: -8px; }
+  .bloco { margin: 8px; border-radius: 28px; background: var(--vidro); border: 1px solid var(--linha); padding: 22px; position: relative; overflow: hidden; }
+  .bloco .ic { width: 34px; height: 34px; stroke: var(--texto); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
+  .bloco .nome { font-size: 21px; font-weight: 600; margin-top: 22px; }
+  .bloco .estado { font-size: 15px; color: var(--fraco); margin-top: 3px; min-height: 19px; }
+
+  .aparelho { width: calc(100% - 16px); display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; }
+  .aparelho .cab { -webkit-flex: 1; flex: 1; }
+  .aparelho .cab .nome { margin-top: 14px; }
+  .chave { display: -webkit-flex; display: flex; background: rgba(0,0,0,.3); border-radius: 22px; padding: 5px; }
+  .chave button { border: 0; background: transparent; font-size: 18px; font-weight: 600; padding: 18px 26px; border-radius: 18px; cursor: pointer; color: var(--fraco); }
+  .chave button:active { background: var(--vidro-forte); }
+  .chave button.feito { background: var(--ark); color: #14151a; }
+
+  .atalho { width: calc(50% - 16px); height: 168px; border: 1px solid var(--linha); text-align: left; cursor: pointer;
+    display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; -webkit-justify-content: flex-end; justify-content: flex-end;
+    -webkit-transition: -webkit-transform .12s ease-out, background .2s; transition: transform .12s ease-out, background .2s; }
+  .atalho .ic { position: absolute; top: 22px; left: 22px; }
+  .atalho:active { -webkit-transform: scale(.96); transform: scale(.96); background: var(--vidro-forte); }
+  .atalho.feito { background: var(--ark); color: #14151a; }
+  .atalho.feito .ic { stroke: #14151a; }
+  .atalho.feito .estado { color: rgba(20,21,26,.7); }
+
+  /* Barra de voz */
+  .voz { margin-top: 26px; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center;
+    background: var(--vidro); border: 1px solid var(--linha); border-radius: 40px; padding: 8px 8px 8px 30px; }
+  .voz input { -webkit-flex: 1; flex: 1; border: 0; background: transparent; font-size: 22px; padding: 14px 0; outline: none; -webkit-user-select: text; user-select: text; }
+  .voz input::placeholder { color: var(--fraco); }
+  .mic { width: 64px; height: 64px; border-radius: 32px; border: 0; background: var(--ark); cursor: pointer; position: relative; -webkit-flex-shrink: 0; flex-shrink: 0; }
+  .mic svg { width: 28px; height: 28px; stroke: #14151a; fill: none; stroke-width: 2; stroke-linecap: round; position: absolute; top: 18px; left: 18px; }
+  .mic.ouvindo::after { content: ""; position: absolute; top: -6px; left: -6px; right: -6px; bottom: -6px; border-radius: 40px; border: 2px solid var(--ark);
+    -webkit-animation: onda 1.2s ease-out infinite; animation: onda 1.2s ease-out infinite; }
+  @-webkit-keyframes onda { from { opacity: 1; -webkit-transform: scale(.9); } to { opacity: 0; -webkit-transform: scale(1.35); } }
+  @keyframes onda { from { opacity: 1; transform: scale(.9); } to { opacity: 0; transform: scale(1.35); } }
+  @media (prefers-reduced-motion: reduce) { .mic.ouvindo::after { -webkit-animation: none; animation: none; } .atalho { transition: none; } }
+
+  @media (max-width: 900px), (orientation: portrait) {
+    body { overflow: auto; }
+    .tela { height: auto; min-height: 100%; padding: 28px 16px 20px; }
+    .meio { display: block; }
+    .ambiente { padding: 0 0 28px; }
+    .hora { font-size: 104px; letter-spacing: -4px; }
+    .data { font-size: 20px; }
+    .resposta { font-size: 22px; margin-top: 24px; min-height: 0; }
+    .controles { width: auto; max-width: none; }
+    .atalho { height: 136px; }
+    .chave button { padding: 14px 16px; font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="tela">
+  <div class="meio">
+    <section class="ambiente">
+      <div class="hora" id="hora" aria-live="off">00<span class="sep">:</span>00</div>
+      <div class="data" id="data"></div>
+      <p class="resposta" id="resposta" aria-live="polite"><span class="quem">JARVIS</span><span id="fala">Pode falar. Ex.: anota que o Lucas pediu o relatório da Vivenda.</span></p>
+    </section>
+    <section class="controles" id="controles" aria-label="Controles do escritório"></section>
+  </div>
+  <form class="voz" id="form">
+    <input id="texto" placeholder="Fale ou escreva pro JARVIS" autocomplete="off" aria-label="Pedido para o JARVIS">
+    <button type="button" class="mic" id="mic" aria-label="Falar"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+  </form>
+</div>
+<script>
+(function () {
+  var ICONES = {
+    ar: '<path d="M12 2v20M4.5 6.5l15 11M19.5 6.5l-15 11M9 3.5l3 2.5 3-2.5M9 20.5l3-2.5 3 2.5"/>',
+    pc: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+    lista: '<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>',
+    padrao: '<circle cx="12" cy="12" r="8"/>'
+  };
+  var chave = '';
+  try {
+    var q = /[?&]chave=([^&]+)/.exec(location.search);
+    if (q) localStorage.setItem('painel-chave', q[1]);
+    chave = localStorage.getItem('painel-chave') || '';
+  } catch (e) {}
+
+  function $(id) { return document.getElementById(id); }
+  function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html) e.innerHTML = html; return e; }
+  function icone(nome) { return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">' + (ICONES[nome] || ICONES.padrao) + '</svg>'; }
+  function dizer(t, erro) { $('fala').textContent = t; $('resposta').className = 'resposta' + (erro ? ' erro' : ''); }
+
+  function api(metodo, rota, corpo, pronto) {
+    var x = new XMLHttpRequest();
+    x.open(metodo, rota, true);
+    x.setRequestHeader('content-type', 'application/json');
+    x.setRequestHeader('x-chave', chave);
+    x.onload = function () {
+      var r = {}; try { r = JSON.parse(x.responseText); } catch (e) {}
+      if (x.status >= 400) return dizer(r.erro || ('Erro ' + x.status + '.'), true);
+      pronto(r);
+    };
+    x.onerror = function () { dizer('O notebook central não respondeu. Confira se ele está ligado e na mesma rede.', true); };
+    x.send(corpo ? JSON.stringify(corpo) : null);
+  }
+
+  function relogio() {
+    var d = new Date(), h = d.getHours(), m = d.getMinutes();
+    $('hora').innerHTML = (h < 10 ? '0' : '') + h + '<span class="sep">:</span>' + (m < 10 ? '0' : '') + m;
+    var dias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    var meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+    $('data').textContent = dias[d.getDay()] + ', ' + d.getDate() + ' de ' + meses[d.getMonth()];
+    document.body.className = h >= 5 && h < 12 ? 'manha' : (h >= 18 || h < 5 ? 'noite' : '');
+  }
+  relogio(); setInterval(relogio, 5000);
+
+  function piscar(b, base) { b.className = base + ' feito'; setTimeout(function () { b.className = base; }, 1600); }
+
+  function rodar(a, b, base, estado) {
+    if (estado) estado.textContent = 'Enviando...';
+    api('POST', '/api/acao/' + a.id, {}, function (r) {
+      dizer(r.fala || 'Feito.'); piscar(b, base);
+      if (estado) estado.textContent = 'Agora há pouco';
+    });
+  }
+
+  api('GET', '/api/acoes', null, function (acoes) {
+    var raiz = $('controles'), aparelhos = {};
+    for (var i = 0; i < acoes.length; i++) {
+      var a = acoes[i];
+      if (a.aparelho) {
+        var ap = aparelhos[a.aparelho];
+        if (!ap) {
+          ap = aparelhos[a.aparelho] = el('div', 'bloco aparelho');
+          var cab = el('div', 'cab', icone(a.icone) + '<div class="nome"></div><div class="estado">Pelo app da Alexa</div>');
+          cab.childNodes[1].textContent = a.aparelho;
+          ap.appendChild(cab); ap.appendChild(el('div', 'chave'));
+          raiz.appendChild(ap);
+        }
+        var bt = el('button'); bt.type = 'button'; bt.textContent = a.nome;
+        bt.onclick = (function (a, bt, est) { return function () { rodar(a, bt, '', est); }; })(a, bt, ap.childNodes[0].childNodes[2]);
+        ap.childNodes[1].appendChild(bt);
+      } else {
+        var b = el('button', 'bloco atalho', icone(a.icone) + '<div class="nome"></div><div class="estado"></div>');
+        b.type = 'button'; b.childNodes[1].textContent = a.nome;
+        b.onclick = (function (a, b) { return function () { rodar(a, b, 'bloco atalho', b.childNodes[2]); }; })(a, b);
+        raiz.appendChild(b);
+      }
+    }
+  });
+
+  function falar(texto) {
+    if (!texto) return;
+    dizer('Você: ' + texto);
+    api('POST', '/api/falar', { texto: texto }, function (r) { dizer(r.fala || 'Feito.'); });
+  }
+  $('form').onsubmit = function (e) { e.preventDefault(); falar($('texto').value.replace(/^\s+|\s+$/g, '')); $('texto').value = ''; };
+
+  var Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  $('mic').onclick = function () {
+    if (!Rec) { $('texto').focus(); return dizer('Este aparelho não tem voz no navegador. Toque no microfone do teclado e dite.'); }
+    var r = new Rec(); r.lang = 'pt-BR'; r.interimResults = false;
+    r.onstart = function () { $('mic').className = 'mic ouvindo'; dizer('Ouvindo...'); };
+    r.onend = function () { $('mic').className = 'mic'; };
+    r.onerror = function (e) { dizer(e.error === 'not-allowed' ? 'O navegador bloqueou o microfone. Libere nas permissões do site.' : 'Não entendi. Fala de novo, mais perto.', true); };
+    r.onresult = function (e) { falar(e.results[0][0].transcript); };
+    r.start();
+  };
+})();
+</script>
+</body>
+</html>

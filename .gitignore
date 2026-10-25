@@ -3,3 +3,12 @@ __pycache__/
 .claude-flow/
 
 refs-github/
+
+casa/tv_som.env
+casa/tv_som.log
+
+casa/painel/painel.env
+casa/**/__pycache__/
+casa/**/.pytest_cache/
+casa/*.env
+casa/*.log
