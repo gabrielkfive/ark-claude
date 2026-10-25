@@ -59,8 +59,12 @@ def main():
     segredos = {}
 
     # Skills soltas (links resolvidos) e hooks
+    # Skill solta que a outra máquina recusa por já existir como plugin ("already taken by an installed plugin")
+    de_plugin = {'ui-ux-pro-max-skill'}
+    pular = shutil.ignore_patterns('.claude-flow', '__pycache__', 'node_modules', '.git')
     shutil.copytree(CLAUDE / 'skills', KIT / 'skills', symlinks=False,
-                    ignore=shutil.ignore_patterns('.claude-flow', '__pycache__', 'node_modules', '.git'))
+                    ignore=lambda d, nomes: set(pular(d, nomes)) | (
+                        {n for n in nomes if n in de_plugin} if Path(d) == CLAUDE / 'skills' else set()))
     shutil.copytree(CLAUDE / 'hooks', KIT / 'hooks', ignore=shutil.ignore_patterns('__pycache__'))
     for md in ('CLAUDE.md', 'RTK.md'):
         if (CLAUDE / md).exists():
