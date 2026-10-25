@@ -22,3 +22,11 @@ Fica de fora de propósito: OpenClaw (segurança fraca), WhatsApp por API não o
 | 15/10 | Software pra ele narrar vídeos | VoiceStudio já instalado no PC (19/10): usar ele |
 | 05/10 | Alexa + JARVIS (ramo `claude/alexa-claude-integration-ynmnqa` no ark-brain, HANDOFF-PC.md) | Publicar do PC |
 | 28/09 | Deploy automático do Ark Brain (PR ark-brain#1) | Rodar do PC |
+
+## Rodado no PC em 25/10 (madrugada)
+
+- Atualizador: 26 de 26 itens de `skills-equipe.json` instalados.
+- Ark Brain no ar em `20261025a-ponte-ditado`: PR ark-brain#1 e modo ditado da Alexa. O deploy automático segue falhando por falta do segredo `CLOUDFLARE_API_TOKEN` no GitHub.
+- PR #40 do WorkFlowArk já estava mesclado em 22/10.
+- vibe-coding-toolkit no PC: pnpm, fd, Codex CLI, Graphify e Ponytail. As skills de projeto já estavam no main.
+- Reel do Nubank, versão Ark®, em `ENTREGAS/2026-10-25/ark/reel-replica-nubank`, com prova lado a lado. A versão WorkFlowArk espera o ok.
