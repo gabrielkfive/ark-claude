@@ -20,8 +20,40 @@ JARVIS = (CASA / 'ark-jarvis').as_posix()
 relatorio = []
 
 
+PY_PC = '{CASA}/AppData/Local/Programs/Python/Python313/python.exe'
+PYTHON = Path(sys.executable).with_name('python.exe').as_posix()  # roda com pythonw ou python, hook usa python
+NODE = shutil.which('node') or 'node'
+
+
+def npm_global():
+    r = subprocess.run('npm root -g', capture_output=True, text=True, shell=True)
+    return Path(r.stdout.strip()).as_posix() if r.returncode == 0 and r.stdout.strip() else ''
+
+
+NPM_GLOBAL = npm_global()
+
+
 def trocar(texto):
-    return texto.replace('{JARVIS}', JARVIS).replace('{CASA}', CASA.as_posix())
+    return (texto.replace(PY_PC, PYTHON).replace('{JARVIS}', JARVIS).replace('{NPM_GLOBAL}', NPM_GLOBAL)
+            .replace('{CASA}', CASA.as_posix()))
+
+
+def trocar_obj(o):
+    if isinstance(o, dict):
+        return {k: trocar_obj(v) for k, v in o.items()}
+    if isinstance(o, list):
+        return [trocar_obj(v) for v in o]
+    return trocar(o) if isinstance(o, str) else o
+
+
+def ajustar_mcp(cfg):
+    # Windows: npx/uvx puro dá CONNECTION_CLOSED; precisa passar pelo cmd /c
+    cmd = cfg.get('command', '')
+    if cmd in ('npx', 'uvx', 'npm', 'pnpm'):
+        cfg['command'], cfg['args'] = 'cmd', ['/c', cmd, *cfg.get('args', [])]
+    elif cmd.lower().endswith('node.exe'):
+        cfg['command'] = NODE
+    return cfg
 
 
 def claude(*args):
@@ -55,8 +87,14 @@ def main():
     # settings.json
     if (CLAUDE / 'settings.json').exists():
         shutil.copy2(CLAUDE / 'settings.json', CLAUDE / f'settings.json.bak-{carimbo}')
-    (CLAUDE / 'settings.json').write_text(trocar((KIT / 'settings.json').read_text(encoding='utf-8')),
-                                          encoding='utf-8')
+    # Mescla: o do PC manda, mas plugin já ligado aqui e chave que só existe aqui continuam
+    novo = trocar_obj(json.loads((KIT / 'settings.json').read_text(encoding='utf-8')))
+    velho = json.loads((CLAUDE / 'settings.json').read_text(encoding='utf-8')) if (CLAUDE / 'settings.json').exists() else {}
+    for chave in ('enabledPlugins', 'extraKnownMarketplaces', 'env'):
+        novo[chave] = {**velho.get(chave, {}), **novo.get(chave, {})}
+    for chave, valor in velho.items():
+        novo.setdefault(chave, valor)
+    (CLAUDE / 'settings.json').write_text(json.dumps(novo, indent=2, ensure_ascii=False), encoding='utf-8')
 
     # Plugins
     p = json.loads((KIT / 'plugins.json').read_text(encoding='utf-8'))
@@ -73,7 +111,7 @@ def main():
 
     # MCP de usuário
     for nome, cfg in json.loads((KIT / 'mcp.json').read_text(encoding='utf-8')).items():
-        texto = trocar(json.dumps(cfg, ensure_ascii=False))
+        texto = json.dumps(ajustar_mcp(trocar_obj(cfg)), ensure_ascii=False)
         faltam = [k for k in re.findall(r'\{SEGREDO:([^}]+)\}', texto) if k not in segredos]
         if faltam:
             relatorio.append(f'mcp {nome}: SEM CHAVE ({", ".join(faltam)})')

@@ -7,7 +7,9 @@ Gera dois destinos:
 Uso: python espelho/exportar.py [kit] [segredos.json]
 """
 import json
+import os
 import re
+import stat
 import shutil
 import sys
 from pathlib import Path
@@ -19,7 +21,9 @@ SEGREDOS = Path(sys.argv[2]) if len(sys.argv) > 2 else CASA / 'Desktop' / 'segre
 
 # Caminhos deste PC viram marcadores; o importar.py troca pelos da máquina nova.
 JARVIS_PC = 'C:/Users/USER/Documents/ARK CONTENT/SOFTWARE/ark-jarvis'
+NPM_PC = (CASA / 'AppData' / 'Roaming' / 'npm' / 'node_modules').as_posix()
 TROCAS = [(JARVIS_PC, '{JARVIS}'), (JARVIS_PC.replace('/', '\\'), '{JARVIS}'),
+          (NPM_PC, '{NPM_GLOBAL}'), (NPM_PC.replace('/', '\\'), '{NPM_GLOBAL}'),
           (str(CASA).replace('\\', '/'), '{CASA}'), (str(CASA), '{CASA}')]
 # MCP que só faz sentido aqui (programa ou pasta que o notebook não tem).
 SO_NESTE_PC = {'davinci-resolve', 'obsidian'}
@@ -31,6 +35,15 @@ def marcar(texto):
     return texto
 
 
+def marcar_obj(o):
+    # Troca dentro dos valores já lidos do JSON (no texto cru as barras vêm escapadas e não casam)
+    if isinstance(o, dict):
+        return {k: marcar_obj(v) for k, v in o.items()}
+    if isinstance(o, list):
+        return [marcar_obj(v) for v in o]
+    return marcar(o) if isinstance(o, str) else o
+
+
 def ler(p):
     return json.loads(p.read_text(encoding='utf-8'))
 
@@ -39,13 +52,15 @@ def main():
     if KIT.exists():
         for filho in KIT.iterdir():
             if filho.name != '.git':
-                shutil.rmtree(filho) if filho.is_dir() else filho.unlink()
+                # objetos do git vêm somente leitura no Windows; libera antes de apagar
+                shutil.rmtree(filho, onexc=lambda f, p, e: (os.chmod(p, stat.S_IWRITE), f(p))) \
+                    if filho.is_dir() else filho.unlink()
     KIT.mkdir(parents=True, exist_ok=True)
     segredos = {}
 
     # Skills soltas (links resolvidos) e hooks
     shutil.copytree(CLAUDE / 'skills', KIT / 'skills', symlinks=False,
-                    ignore=shutil.ignore_patterns('.claude-flow', '__pycache__', 'node_modules'))
+                    ignore=shutil.ignore_patterns('.claude-flow', '__pycache__', 'node_modules', '.git'))
     shutil.copytree(CLAUDE / 'hooks', KIT / 'hooks', ignore=shutil.ignore_patterns('__pycache__'))
     for md in ('CLAUDE.md', 'RTK.md'):
         if (CLAUDE / md).exists():
@@ -80,12 +95,12 @@ def main():
         if m:
             segredos[f'{nome}.url'] = m.group(2)
             cfg['url'] = url.replace(m.group(2), f'{{SEGREDO:{nome}.url}}')
-        mcps[nome] = json.loads(marcar(json.dumps(cfg, ensure_ascii=False)))
+        mcps[nome] = marcar_obj(cfg)
     (KIT / 'mcp.json').write_text(json.dumps(mcps, indent=2, ensure_ascii=False), encoding='utf-8')
 
     # settings.json com caminhos marcados
-    (KIT / 'settings.json').write_text(marcar((CLAUDE / 'settings.json').read_text(encoding='utf-8')),
-                                       encoding='utf-8')
+    (KIT / 'settings.json').write_text(json.dumps(marcar_obj(ler(CLAUDE / 'settings.json')), indent=2,
+                                                  ensure_ascii=False), encoding='utf-8')
 
     # Arquivos de token soltos
     for rel in ('.config/ark-brain/token',):
