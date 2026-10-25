@@ -29,6 +29,9 @@ TROCAS = [(JARVIS_PC, '{JARVIS}'), (JARVIS_PC.replace('/', '\\'), '{JARVIS}'),
 SO_NESTE_PC = {'davinci-resolve', 'obsidian'}
 
 
+FORA_DO_ESPELHO = {'ponytail'}
+
+
 def marcar(texto):
     for de, para in TROCAS:
         texto = texto.replace(de, para)
@@ -51,7 +54,7 @@ def ler(p):
 def main():
     if KIT.exists():
         for filho in KIT.iterdir():
-            if filho.name != '.git':
+            if filho.name not in ('.git', 'n8n', '.gitignore'):  # n8n é código próprio do repo, não vem do PC
                 # objetos do git vêm somente leitura no Windows; libera antes de apagar
                 shutil.rmtree(filho, onexc=lambda f, p, e: (os.chmod(p, stat.S_IWRITE), f(p))) \
                     if filho.is_dir() else filho.unlink()
@@ -79,7 +82,10 @@ def main():
     for nome, m in ler(CLAUDE / 'plugins' / 'known_marketplaces.json').items():
         src = m.get('source', {})
         mercados[nome] = src.get('repo') or src.get('url') or marcar(src.get('path', ''))
-    plugins = list(ler(CLAUDE / 'plugins' / 'installed_plugins.json')['plugins'].keys())
+    # Ponytail fica fora do espelho: o Gabriel deixou bloqueado (só liga quando ele pedir)
+    fora = lambda chave: chave.split('@')[0].lower() in FORA_DO_ESPELHO or chave.lower() in FORA_DO_ESPELHO
+    mercados = {k: v for k, v in mercados.items() if not fora(k)}
+    plugins = [p for p in ler(CLAUDE / 'plugins' / 'installed_plugins.json')['plugins'] if not fora(p) and not fora(p.split('@')[-1])]
     (KIT / 'plugins.json').write_text(json.dumps({'marketplaces': mercados, 'plugins': plugins},
                                                  indent=2, ensure_ascii=False), encoding='utf-8')
 
@@ -103,7 +109,11 @@ def main():
     (KIT / 'mcp.json').write_text(json.dumps(mcps, indent=2, ensure_ascii=False), encoding='utf-8')
 
     # settings.json com caminhos marcados
-    (KIT / 'settings.json').write_text(json.dumps(marcar_obj(ler(CLAUDE / 'settings.json')), indent=2,
+    config = ler(CLAUDE / 'settings.json')
+    for campo in ('enabledPlugins', 'extraKnownMarketplaces'):
+        if isinstance(config.get(campo), dict):
+            config[campo] = {k: v for k, v in config[campo].items() if not fora(k) and not fora(k.split('@')[-1])}
+    (KIT / 'settings.json').write_text(json.dumps(marcar_obj(config), indent=2,
                                                   ensure_ascii=False), encoding='utf-8')
 
     # Arquivos de token soltos
