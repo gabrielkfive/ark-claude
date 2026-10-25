@@ -3,7 +3,7 @@
 # Uso (PowerShell como admin):
 #   powershell -ExecutionPolicy Bypass -File maquina-nova.ps1 -Verificar   so diagnostica
 #   powershell -ExecutionPolicy Bypass -File maquina-nova.ps1              diagnostica e instala o basico
-# Depois dele: ark-claude\instalar-ferramentas.ps1 e jarvis-ark\instalar.ps1.
+# Depois dele: ark-claude\instalar-ferramentas.ps1 e ark-jarvis\instalar.ps1.
 param([switch]$Verificar)
 $ErrorActionPreference = "Continue"
 function T($m) { Write-Host "`n== $m" -ForegroundColor Yellow }
@@ -75,6 +75,6 @@ if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
 
 T "Proximos passos"
 "  1. gh auth login"
-"  2. gh repo clone <dono>/ark-claude `$env:USERPROFILE\ark-claude  e  jarvis-ark"
-"  3. ark-claude\instalar-ferramentas.ps1  e  jarvis-ark\instalar.ps1"
+"  2. gh repo clone <dono>/ark-claude `$env:USERPROFILE\ark-claude  e  <dono>/ark-jarvis"
+"  3. ark-claude\instalar-ferramentas.ps1  e  ark-jarvis\instalar.ps1 (fora do app Claude Desktop)"
 if ($os.BuildNumber -lt 22000) { "  4. Windows 10: atualizar para o 11 pelo Assistente de Instalacao, se o hardware aceitar." }
