@@ -13,6 +13,11 @@ claude plugin marketplace add "$DIR" >/dev/null 2>&1 || claude plugin marketplac
 claude plugin install ark@ark-claude >/dev/null 2>&1 || claude plugin update ark@ark-claude >/dev/null 2>&1 || true
 claude plugin details ark@ark-claude 2>/dev/null | grep -E "^ark|Skills \(|Hooks \(" || echo "AVISO: 'claude plugin details' não respondeu; confira com 'claude plugin list'"
 
+echo "== 2b. claude-ads (tráfego pago: /ads meta, /ads google, auditoria de conta)"
+claude plugin marketplace add agricidaniel/claude-ads >/dev/null 2>&1 || claude plugin marketplace update ai-marketing-hub-claude-ads >/dev/null 2>&1 || true
+claude plugin install claude-ads@ai-marketing-hub-claude-ads >/dev/null 2>&1 || claude plugin update claude-ads@ai-marketing-hub-claude-ads >/dev/null 2>&1 || true
+claude plugin list 2>/dev/null | grep -q claude-ads && echo "  ok" || echo "  AVISO: claude-ads não instalou; rode no Claude Code: /plugin marketplace add agricidaniel/claude-ads e /plugin install claude-ads@ai-marketing-hub-claude-ads"
+
 echo "== 3. seção da ARK no CLAUDE.md"
 mkdir -p "$HOME/.claude"
 if ! grep -q "Skills: usar, nunca remover" "$CLAUDE_MD" 2>/dev/null; then
@@ -25,6 +30,6 @@ echo "== 4. python"
 if command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1; then echo "  ok"; else echo "  FALTA python3 (Mac: brew install python)"; fi
 
 echo "== 5. teste do roteador"
-printf '{"prompt":"monta a proposta pro cliente novo"}' | bash "$DIR/plugins/ark/hooks/run.sh" roteador | head -c 200; echo
+printf '{"prompt":"como ta o trafego da vivenda essa semana"}' | bash "$DIR/plugins/ark/hooks/run.sh" roteador | head -c 200; echo
 echo
 echo "Pronto. Feche e abra o Claude Code pra carregar hooks e skills."

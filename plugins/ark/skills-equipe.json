@@ -1,19 +1,111 @@
 {
   "_comentario": "Skills e plugins que todo PC da ARK deve ter. O hook atualizar instala o que faltar no início da sessão (nunca remove nada). Pra acrescentar: uma linha aqui, commit e push.",
   "plugins": [
-    {"nome": "frontend-design@claude-plugins-official", "fonte": "anthropics/claude-plugins-official"},
-    {"nome": "superpowers@claude-plugins-official", "fonte": "anthropics/claude-plugins-official"},
-    {"nome": "ecc@ecc", "fonte": "affaan-m/ECC"},
-    {"nome": "hallmark@hallmark", "fonte": "Nutlope/hallmark"},
-    {"nome": "ui-ux-pro-max@ui-ux-pro-max-skill", "fonte": "nextlevelbuilder/ui-ux-pro-max-skill"},
-    {"nome": "impeccable@impeccable", "fonte": "pbakaus/impeccable"},
-    {"nome": "diagram-design@diagram-design", "fonte": "cathrynlavery/diagram-design"},
-    {"nome": "humanizer@humanizer", "fonte": "blader/humanizer"},
-    {"nome": "i-have-adhd@i-have-adhd", "fonte": "ayghri/i-have-adhd"},
-    {"nome": "mattpocock-skills@mattpocock", "fonte": "mattpocock/skills"},
-    {"nome": "agent-skills@addy-agent-skills", "fonte": "addyosmani/agent-skills"}
+    {
+      "nome": "frontend-design@claude-plugins-official",
+      "fonte": "anthropics/claude-plugins-official"
+    },
+    {
+      "nome": "superpowers@claude-plugins-official",
+      "fonte": "anthropics/claude-plugins-official"
+    },
+    {
+      "nome": "ecc@ecc",
+      "fonte": "affaan-m/ECC"
+    },
+    {
+      "nome": "hallmark@hallmark",
+      "fonte": "Nutlope/hallmark"
+    },
+    {
+      "nome": "ui-ux-pro-max@ui-ux-pro-max-skill",
+      "fonte": "nextlevelbuilder/ui-ux-pro-max-skill"
+    },
+    {
+      "nome": "impeccable@impeccable",
+      "fonte": "pbakaus/impeccable"
+    },
+    {
+      "nome": "diagram-design@diagram-design",
+      "fonte": "cathrynlavery/diagram-design"
+    },
+    {
+      "nome": "humanizer@humanizer",
+      "fonte": "blader/humanizer"
+    },
+    {
+      "nome": "i-have-adhd@i-have-adhd",
+      "fonte": "ayghri/i-have-adhd"
+    },
+    {
+      "nome": "mattpocock-skills@mattpocock",
+      "fonte": "mattpocock/skills"
+    },
+    {
+      "nome": "agent-skills@addy-agent-skills",
+      "fonte": "addyosmani/agent-skills"
+    },
+    {
+      "nome": "claude-ads@ai-marketing-hub-claude-ads",
+      "fonte": "AgriciDaniel/claude-ads"
+    },
+    {
+      "nome": "taste-skill@taste-skill",
+      "fonte": "Leonxlnx/taste-skill"
+    },
+    {
+      "nome": "replica-skill@replica-skill",
+      "fonte": "Jakeschincariol/replica-skill"
+    },
+    {
+      "nome": "watch@claude-video",
+      "fonte": "bradautomates/claude-video"
+    },
+    {
+      "nome": "video@mcp-video-analyzer",
+      "fonte": "guimatheus92/mcp-video-analyzer"
+    },
+    {
+      "nome": "hyperframes@hyperframes",
+      "fonte": "heygen-com/hyperframes"
+    },
+    {
+      "nome": "last30days@last30days-skill",
+      "fonte": "mvanhorn/last30days-skill"
+    },
+    {
+      "nome": "marketing-skills@marketingskills",
+      "fonte": "coreyhaines31/marketingskills"
+    },
+    {
+      "nome": "instagram-skills@instagram-skills",
+      "fonte": "sergebulaev/instagram-skills"
+    },
+    {
+      "nome": "social-media-research-skills@social-media-research-skills",
+      "fonte": "ScrapeCreators/social-media-research-skills"
+    },
+    {
+      "nome": "caveman@caveman",
+      "fonte": "JuliusBrussee/caveman"
+    },
+    {
+      "nome": "claude-hud@claude-hud",
+      "fonte": "jarrodwatts/claude-hud"
+    },
+    {
+      "nome": "claude-mem@thedotmack",
+      "fonte": "thedotmack/claude-mem"
+    }
   ],
   "skills": [
-    {"confere": "emil-design-eng", "fonte": "emilkowalski/skills"}
+    {
+      "confere": "emil-design-eng",
+      "fonte": "emilkowalski/skills"
+    },
+    {
+      "confere": "remotion-create",
+      "fonte": "remotion-dev/skills"
+    }
   ]
 }

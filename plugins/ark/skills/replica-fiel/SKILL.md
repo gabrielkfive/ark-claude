@@ -13,6 +13,12 @@ Nunca iterar design às cegas. Cada rodada precisa de PROVA VISUAL: referência 
 
 Antes de qualquer edição de design, tire UM screenshot de teste da página atual e confirme que o arquivo foi salvo e aberto. Se o screenshot falhar (EPERM, allowed roots, browser fechado), PARE e conserte a ferramenta primeiro. Iterar sem enxergar é o modo de falha número 1.
 
+## Réplica fiel é cópia, não inspiração (Gabriel, 25/10/2026)
+
+Quando ele manda um exemplo, a entrega é aquele exemplo com a marca dele: mesmas cenas na mesma ordem, mesmo tempo de cada cena, mesmas transições, mesma escala de tipografia, mesmo tipo de mockup e mesma densidade. Só muda o que ele mandou mudar (marca, cor, texto, fotos). Versão "no espírito de", com roteiro e estrutura inventados, é falha, mesmo que fique bonita.
+
+Vídeo de referência: baixar, quebrar em quadros (`ffmpeg -vf fps=2`), anotar cena por cena (segundo, o que aparece, como entra, como sai) e montar a cópia nessa mesma tabela. Prova = os dois vídeos lado a lado no mesmo segundo. Vídeo e motion se fazem no PC (fontes, material real, Remotion, render pesado); na nuvem só se não houver PC, e avisando que é rascunho.
+
 ## Fluxo
 
 1. **Capturar a referência.** Baixe/screenshot a referência para um arquivo local e ABRA para ver. Se for Figma e o MCP falhar (rate limit do plano), peça um print ao usuário em vez de seguir de memória.

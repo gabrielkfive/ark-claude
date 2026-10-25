@@ -19,6 +19,20 @@ Hooks (em `plugins/ark/hooks/`):
 
 Os hooks ignoram tudo dentro de `.claude/`, `.agents/`, `ark-claude/`, `node_modules/` e da pasta temporária do Claude.
 
+## Tráfego pago (23/10/2026)
+
+As 5 funções do reel do Matheus Hunoff, ligadas sozinhas pelo roteador sempre que Gabriel, Danilo ou Rosiron falam de tráfego (campanha, anúncio, criativo, CPM, ROAS, gerenciador, verba...), junto com marketing-arsenal, ecc:marketing-campaign e saas-marketing-suite:
+
+| Função | Skill |
+|---|---|
+| /spy (espião de concorrentes) | `spy` |
+| Competitive Ads Extractor (estrategista) | `competitive-ads-extractor` |
+| /bulk-creative (copywriter, 20 variações) | `bulk-creative` |
+| /ads-score (nota de 6 elementos antes de subir) | `ads-score` |
+| /ads meta (auditoria da conta) | plugin `claude-ads` (AgriciDaniel, MIT), instalado pelo `instalar.sh` |
+
+O maestro `trafego-pago` escolhe a ordem e puxa dado real pelos conectores Pipeboard (Meta e Google Ads). Nada muda na conta sem ok explícito.
+
 ## Roteador de skills
 
 Mapa curado em `plugins/ark/rotas.json` (vocabulário do Gabriel em regex -> skills). Catálogo de todas as skills da máquina em `plugins/ark/catalogo-skills.json`, regenerado com `python scripts/gerar_catalogo.py`. Testar: `printf '{"prompt":"..."}' | bash plugins/ark/hooks/run.sh roteador`.
