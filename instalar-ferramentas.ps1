@@ -5,7 +5,8 @@
 # Pode rodar de novo: o que ja existe e pulado.
 
 $ErrorActionPreference = "Continue"
-$WFA = "C:\Users\USER\Documents\ARK CONTENT\SOFTWARE\gest-odeagencia"
+$WFA = @("$env:USERPROFILE\gest-odeagencia", "$env:USERPROFILE\Documents\ARK CONTENT\SOFTWARE\gest-odeagencia") | Where-Object { Test-Path $_ } | Select-Object -First 1
+if (-not $WFA) { $WFA = "$env:USERPROFILE\gest-odeagencia" }
 $resultado = @()
 
 function Tem($cmd) { return [bool](Get-Command $cmd -ErrorAction SilentlyContinue) }
