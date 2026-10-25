@@ -52,5 +52,10 @@ if (Test-Path $n8n) {
 if (-not (Test-Path (Join-Path $painel 'painel.env'))) {
   Write-Host '6. Falta casa\painel\painel.env (copiar do PC; tem as chaves do Ark Brain e do Voice Monkey)'
 }
+Write-Host '7. Subindo agora (sem esperar o próximo login)'
+Get-ScheduledTask -TaskName 'ARK *' | Start-ScheduledTask
+Start-Sleep 5
+try { Invoke-WebRequest "http://localhost:$Porta/api/acoes" -UseBasicParsing | Out-Null; Write-Host '   painel respondeu' }
+catch { Write-Host "   painel NÃO respondeu: $($_.Exception.Message)"; & $py (Join-Path $painel 'servidor.py') $Porta }
 Write-Host "Pronto para testar: http://localhost:$Porta  (iPad: http://<ip do Yoga>:$Porta)"
 Write-Host 'Login automático: rodar netplwiz e desmarcar a senha (só o Gabriel faz, pede a senha dele).'
