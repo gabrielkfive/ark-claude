@@ -416,6 +416,20 @@
         "roteiro"
       ],
       "quando": "plano conceitual, cinema, referências e JEV"
+    },
+    {
+      "gatilho": "pesquis|compar|qual (o )?melhor|vale a pena|preco|orcamento de|fornecedor|notebook|alternativa",
+      "skills": [
+        "pesquisa-ampla"
+      ],
+      "quando": "pesquisa de compra, preco, ferramenta ou ideia: objetivo real, opcoes nao citadas, 3 tipos de fonte, busca contraria"
+    },
+    {
+      "gatilho": "terceiriz|gemini|argon|antigravity|ia local|ollama|economiz\\w* (credito|token)|nao gast\\w* (o )?max|plano pro|hermes",
+      "skills": [
+        "delegar"
+      ],
+      "quando": "trabalho bracal vai pro Ollama local ou Gemini (agy); Claude decide e confere"
     }
   ],
   "processos": [
