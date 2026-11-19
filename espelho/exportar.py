@@ -26,7 +26,11 @@ TROCAS = [(JARVIS_PC, '{JARVIS}'), (JARVIS_PC.replace('/', '\\'), '{JARVIS}'),
           (NPM_PC, '{NPM_GLOBAL}'), (NPM_PC.replace('/', '\\'), '{NPM_GLOBAL}'),
           (str(CASA).replace('\\', '/'), '{CASA}'), (str(CASA), '{CASA}')]
 # MCP que só faz sentido aqui (programa ou pasta que o notebook não tem).
-SO_NESTE_PC = {'davinci-resolve', 'obsidian'}
+SO_NESTE_PC = {'davinci-resolve'}
+VAULT = CASA / 'Documents' / 'Obsidian Vault'
+# Acesso e chaves soltas: vão para segredos.json e o importar.py grava no mesmo lugar (publisher em ~/.ark)
+PUBLISHER = CASA / 'Documents' / 'ARK CONTENT' / 'SOFTWARE' / 'ark-publisher' / 'private' / 'client.json'
+PASTAS_DE_CHAVE = ('.config/ark-brain', '.config/ark', '.config/n8n-ark', '.config/watch')
 
 
 FORA_DO_ESPELHO = {'ponytail'}
@@ -117,10 +121,16 @@ def main():
                                                   ensure_ascii=False), encoding='utf-8')
 
     # Arquivos de token soltos
-    for rel in ('.config/ark-brain/token',):
-        p = CASA / rel
-        if p.exists():
-            segredos[f'arquivo:{rel}'] = p.read_text(encoding='utf-8').strip()
+    for pasta in PASTAS_DE_CHAVE:
+        for p in (CASA / pasta).glob('*'):
+            if p.is_file():
+                segredos[f'arquivo:{p.relative_to(CASA).as_posix()}'] = p.read_text(encoding='utf-8').strip()
+    if PUBLISHER.exists():  # sem isso o agendar-post responde "Sem acesso ao publisher" (Composio)
+        segredos['arquivo:.ark/publisher.json'] = PUBLISHER.read_text(encoding='utf-8').strip()
+
+    # Vault do Obsidian (o MCP obsidian aponta para ele)
+    if VAULT.exists():
+        shutil.copytree(VAULT, KIT / 'obsidian-vault', ignore=shutil.ignore_patterns('.claude-flow', 'workspace*.json'))
 
     # Prova: nenhum valor secreto dentro do kit
     for arq in KIT.rglob('*'):

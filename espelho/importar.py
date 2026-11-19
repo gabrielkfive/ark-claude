@@ -129,6 +129,22 @@ def main():
             alvo.write_text(valor, encoding='utf-8')
             relatorio.append(f'token: {alvo}')
 
+    # Vault do Obsidian: o do kit atualiza o local, sem apagar nota que só existe aqui
+    if (KIT / 'obsidian-vault').exists():
+        vault = CASA / 'Documents' / 'Obsidian Vault'
+        shutil.copytree(KIT / 'obsidian-vault', vault, dirs_exist_ok=True)
+        relatorio.append(f'obsidian: {vault}')
+
+    # Conferência do que o Gabriel cobra em toda sessão
+    cfg = json.loads((CLAUDE / 'settings.json').read_text(encoding='utf-8'))
+    _, plugins = claude('plugin', 'list')
+    _, mcps = claude('mcp', 'list')
+    relatorio += ['', 'CONFERÊNCIA',
+                  f'caveman: {"ok" if "caveman" in plugins.lower() else "FALTA"}',
+                  f'remote control no início: {"ok" if cfg.get("remoteControlAtStartup") else "FALTA"}',
+                  f'publisher Composio: {"ok" if (CASA / ".ark" / "publisher.json").exists() else "FALTA"}',
+                  f'skills soltas: {sum(1 for _ in (CLAUDE / "skills").glob("*/"))}',
+                  'mcp:', mcps]
     print('\n'.join(relatorio))
     if segredos:
         print(f'\nApague {SEGREDOS} depois de conferir (tem chaves).')
