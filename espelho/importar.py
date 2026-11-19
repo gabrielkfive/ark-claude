@@ -64,6 +64,14 @@ def claude(*args):
 
 def main():
     segredos = json.loads(SEGREDOS.read_text(encoding='utf-8')) if SEGREDOS.exists() else {}
+
+    # Hooks chamam o Jarvis e o claude-mem precisa do Bun; sem eles todo prompt sai bloqueado
+    if not (Path(JARVIS) / 'flow_hook.py').exists():
+        r = subprocess.run(['gh', 'repo', 'clone', 'gabrielkfive/ark-jarvis', JARVIS], capture_output=True, text=True)
+        relatorio.append(f'ark-jarvis: {"clonado" if r.returncode == 0 else "FALHOU (rode gh auth login) " + r.stderr[-120:]}')
+    if not shutil.which('bun'):
+        r = subprocess.run(['powershell', '-c', 'irm bun.sh/install.ps1 | iex'], capture_output=True, text=True)
+        relatorio.append(f'bun: {"instalado" if r.returncode == 0 else "FALHOU " + r.stderr[-120:]}')
     carimbo = time.strftime('%Y%m%d-%H%M%S')
 
     # Skills, hooks e instruções globais (o que já existe vai para .bak antes)
